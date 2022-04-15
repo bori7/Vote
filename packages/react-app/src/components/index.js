@@ -17,3 +17,7 @@ export { default as Timeline } from "./Timeline";
 export { default as TokenBalance } from "./TokenBalance";
 export { default as Wallet } from "./Wallet";
 export { default as L2Bridge } from "./L2Bridge";
+export { default as Header1 } from "./Header1";
+export { default as BigTransfer } from "./BigTransfer";
+export { default as Benefits } from "./Benefits";
+export { default as Footer } from "./Footer";
