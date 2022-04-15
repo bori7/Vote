@@ -669,68 +669,37 @@ function App(props) {
   };
 
   return (
-    <div className="App">
+    <div className="main">
       {/* ✏️ Edit the header and change the title to your project name */}
-      {/* <Header /> */}
-      
+
       {/* {networkDisplay} */}
       <BrowserRouter>
-        {/* <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
-          <Menu.Item key="/">
-            <Link
-              onClick={() => {
-                setRoute("/");
-              }}
-              to="/"
-            >
-              YourCollectibles
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/transfers">
-            <Link
-              onClick={() => {
-                setRoute("/transfers");
-              }}
-              to="/transfers"
-            >
-              Transfers
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/ipfsup">
-            <Link
-              onClick={() => {
-                setRoute("/ipfsup");
-              }}
-              to="/ipfsup"
-            >
-              IPFS Upload
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/ipfsdown">
-            <Link
-              onClick={() => {
-                setRoute("/ipfsdown");
-              }}
-              to="/ipfsdown"
-            >
-              IPFS Download
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="/debugcontracts">
-            <Link
-              onClick={() => {
-                setRoute("/debugcontracts");
-              }}
-              to="/debugcontracts"
-            >
-              Debug Contracts
-            </Link>
-          </Menu.Item>
-        </Menu> */}
+        <Header1
+          acnt={
+            <Account
+              address={address}
+              localProvider={localProvider}
+              userSigner={userSigner}
+              mainnetProvider={mainnetProvider}
+              price={price}
+              web3Modal={web3Modal}
+              loadWeb3Modal={loadWeb3Modal}
+              logoutOfWeb3Modal={logoutOfWeb3Modal}
+              blockExplorer={blockExplorer}
+            />
+          }
+          setRoute={setRoute}
+        />
         <Switch>
+          <Route exact path="/">
+            <BigTransfer writeContracts={writeContracts} tx={tx} />
+          </Route>
+          <Route path="/library">
+            <Library writeContracts={writeContracts} tx={tx} />
+          </Route>
           {/* <Route exact path="/">
             <div style={{ width: 640, margin: "auto", marginTop: 32, paddingBottom: 32 }}>
-              <Button
+              <Button 
                 disabled={minting}
                 shape="round"
                 size="large"
@@ -901,37 +870,8 @@ function App(props) {
         </Switch>
       </BrowserRouter>
 
-      <div>
-        <BrowserRouter>
-            <Header1
-              acnt={
-                <Account
-                  address={address}
-                  localProvider={localProvider}
-                  userSigner={userSigner}
-                  mainnetProvider={mainnetProvider}
-                  price={price}
-                  web3Modal={web3Modal}
-                  loadWeb3Modal={loadWeb3Modal}
-                  logoutOfWeb3Modal={logoutOfWeb3Modal}
-                  blockExplorer={blockExplorer}
-                />
-              }
-            />
-          <main className="main">
-            <Switch>
-              <Route path="/">
-                <BigTransfer writeContracts={writeContracts} tx={tx} />
-              </Route>
-              <Route path="/library">
-                <Library writeContracts={writeContracts} tx={tx} />
-              </Route>
-            </Switch>
-            <Benefits />
-            <Footer />
-          </main>
-        </BrowserRouter>
-      </div>
+      <Benefits />
+      <Footer />
     </div>
   );
 }

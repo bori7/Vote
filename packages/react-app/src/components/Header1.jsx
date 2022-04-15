@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 
-export default function Header1({ acnt }) {
+export default function Header1({ acnt, setRoute }) {
   return (
     <header className="header ">
       <div className="header-absolute">
@@ -20,7 +20,7 @@ export default function Header1({ acnt }) {
               </a>
             </div>
             <div className="header__col mod--2">
-              <Link to="/"  data-anim="link" className="header__nav-link w-inline-block">
+              <Link to="/" data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">Upload</div>
                   <div className="nav-txt">Upload</div>
@@ -32,7 +32,14 @@ export default function Header1({ acnt }) {
                   <div className="nav-txt">Benefits</div>
                 </div>
               </a>
-              <Link to="/library"  data-anim="link" className="header__nav-link w-inline-block">
+              <Link
+                to="/library"
+                data-anim="link"
+                className="header__nav-link w-inline-block"
+                onClick={() => {
+                  setRoute("/library");
+                }}
+              >
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">Library</div>
                   <div className="nav-txt">Library</div>
