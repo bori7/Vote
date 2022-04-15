@@ -26,12 +26,6 @@ export default function Header1({ acnt, setRoute }) {
                   <div className="nav-txt">Upload</div>
                 </div>
               </Link>
-              <a href="#Benefits" data-anim="link" className="header__nav-link w-inline-block">
-                <div className="nav-txt-anim">
-                  <div className="nav-txt mod--over">Benefits</div>
-                  <div className="nav-txt">Benefits</div>
-                </div>
-              </a>
               <Link
                 to="/library"
                 data-anim="link"
@@ -41,10 +35,30 @@ export default function Header1({ acnt, setRoute }) {
                 }}
               >
                 <div className="nav-txt-anim">
-                  <div className="nav-txt mod--over">Library</div>
-                  <div className="nav-txt">Library</div>
+                  <div className="nav-txt mod--over">Public Library</div>
+                  <div className="nav-txt">Public Library</div>
                 </div>
               </Link>
+
+              <Link
+                to="/library"
+                data-anim="link"
+                className="header__nav-link w-inline-block"
+                onClick={() => {
+                  setRoute("/privatelibrary");
+                }}
+              >
+                <div className="nav-txt-anim">
+                  <div className="nav-txt mod--over">Private Library</div>
+                  <div className="nav-txt">Private Library</div>
+                </div>
+              </Link>
+              <a href="#Benefits" data-anim="link" className="header__nav-link w-inline-block">
+                <div className="nav-txt-anim">
+                  <div className="nav-txt mod--over">Benefits</div>
+                  <div className="nav-txt">Benefits</div>
+                </div>
+              </a>
               <a href="#About" data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">About</div>

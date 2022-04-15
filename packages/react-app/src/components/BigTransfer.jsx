@@ -19,7 +19,8 @@ export default function BigTransfer({ writeContracts, tx }) {
   const submitContract = async () => {
     try {
       console.log("writeContracts", writeContracts);
-      const waveTnx = await tx(writeContracts.Library.publicUpload(mmg, fileUrl, mmg));
+
+      const waveTnx = await tx(writeContracts.Library.publicUpload(fileName, fileUrl, fileDescription));
       console.log("Minig..", waveTnx.hash);
 
       await waveTnx.wait();
@@ -50,12 +51,17 @@ export default function BigTransfer({ writeContracts, tx }) {
 
           <div>
             <label>File name:</label>
-            <input type="text" placeholder="File Name" onChange={e => setfileName(e.target.value)} />
+            <input type="text" placeholder="File Name" onChange={e => setfileName(e.target.value)} value={fileName} />
 
             <br />
 
             <label>File Description:</label>
-            <input type="text" placeholder="File Description" onChange={e => setfileDescription(e.target.value)} />
+            <input
+              type="text"
+              placeholder="File Description"
+              onChange={e => setfileDescription(e.target.value)}
+              value={fileDescription}
+            />
 
             <br />
             <label>File Select:</label>
