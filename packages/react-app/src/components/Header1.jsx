@@ -1,5 +1,6 @@
 import React from "react";
 import "./Header.css";
+import { Link } from "react-router-dom";
 
 export default function Header1({ acnt }) {
   return (
@@ -19,24 +20,24 @@ export default function Header1({ acnt }) {
               </a>
             </div>
             <div className="header__col mod--2">
-              <a href="#uploadFiles" data-anim="link" className="header__nav-link w-inline-block">
+              <Link to="/"  data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">Upload</div>
                   <div className="nav-txt">Upload</div>
                 </div>
-              </a>
+              </Link>
               <a href="#Benefits" data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">Benefits</div>
                   <div className="nav-txt">Benefits</div>
                 </div>
               </a>
-              <a href="#Library" data-anim="link" className="header__nav-link w-inline-block">
+              <Link to="/library"  data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">Library</div>
                   <div className="nav-txt">Library</div>
                 </div>
-              </a>
+              </Link>
               <a href="#About" data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">About</div>
