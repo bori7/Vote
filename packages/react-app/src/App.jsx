@@ -277,8 +277,8 @@ function App(props) {
 
   // const privateLibrary = useContractReader(readContracts, "Library", "viewPrivateLib", [address]);
 
-  const privateLibrary = tx(writeContracts.Library.viewPrivateLib());
-  console.log("🤗 private_Library:", privateLibrary);
+  // const privateLibrary = tx(writeContracts.Library.viewPrivateLib());
+  // console.log("🤗 private_Library:", privateLibrary);
 
   // 📟 Listen for broadcast events
   const uploadEvents = useEventListener(readContracts, "Library", "PublicUpload", localProvider, 1);
@@ -705,7 +705,7 @@ function App(props) {
           </Route>
 
           <Route path="/privatelibrary">
-            <PrivateLibrary writeContracts={writeContracts} tx={tx} privateLibrary={privateLibrary} />
+            <PrivateLibrary writeContracts={writeContracts} tx={tx} privateLibrary={"sdsd"} />
           </Route>
           {/* <Route exact path="/">
             <div style={{ width: 640, margin: "auto", marginTop: 32, paddingBottom: 32 }}>
