@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { List } from "antd";
+import { List, Button } from "antd";
 
-export default function Library({ uploadEvents }) {
+export default function PrivateLibrary({ writeContracts, tx, privateLibrary }) {
   return (
     <div style={{ backgroundColor: "#636C78" }}>
       <section id="#Library" data-w-id="9a8c8c5e-18d4-aeb9-bc37-bac71fe0745b" className="section mod--hero ">
         <h1 className="heading--center" style={{ color: "#fff" }}>
-          Library
+          Private Library
         </h1>
         <div>
           <List
             grid={{ gutter: 16, column: 3 }}
-            dataSource={uploadEvents}
+            dataSource={privateLibrary}
             renderItem={item => {
               return (
                 <List.Item key={item.transactionHash + item.blockNumber + "_"}>
@@ -45,6 +45,33 @@ export default function Library({ uploadEvents }) {
                         </div>
                       </div>
                     </div>
+                    {/* <div>
+                        owner:{" "}
+                        <Address
+                          address={item.owner}
+                          ensProvider={mainnetProvider}
+                          blockExplorer={blockExplorer}
+                          fontSize={16}
+                        />
+                        <AddressInput
+                          ensProvider={mainnetProvider}
+                          placeholder="transfer to address"
+                          value={transferToAddresses[id]}
+                          onChange={newValue => {
+                            const update = {};
+                            update[id] = newValue;
+                            setTransferToAddresses({ ...transferToAddresses, ...update });
+                          }}
+                        />
+                        <Button
+                          onClick={() => {
+                            console.log("writeContracts", writeContracts);
+                            tx(writeContracts.YourCollectible.transferFrom(address, transferToAddresses[id], id));
+                          }}
+                        >
+                          Transfer
+                        </Button>
+                      </div> */}
                   </div>
                 </List.Item>
               );

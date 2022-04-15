@@ -41,7 +41,7 @@ export default function Header1({ acnt, setRoute }) {
               </Link>
 
               <Link
-                to="/library"
+                to="/privatelibrary"
                 data-anim="link"
                 className="header__nav-link w-inline-block"
                 onClick={() => {

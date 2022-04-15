@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { FileUpload } from "react-ipfs-uploader";
-import { Input, Checkbox, Collapse, Card, List } from "antd";
-import { Address } from "./";
+import { Input, Checkbox } from "antd";
 import "./BigTransfer.css";
 
-export default function BigTransfer({ writeContracts, tx, uploadEvents, mainnetProvider }) {
+export default function BigTransfer({ writeContracts, tx }) {
   const mystyle = {
     // WebkitTransform: "translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
     MozTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
     MsTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
     // transform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
   };
-
-  const { Panel } = Collapse;
 
   const [fileUrl, setFileUrl] = useState("");
 
@@ -54,7 +51,9 @@ export default function BigTransfer({ writeContracts, tx, uploadEvents, mainnetP
     >
       <div className="content mod--hero u-upload-opacity">
         <div className="hero__content">
-          <h2 className="heading1 mod--hero" style={{ color: "white" }}>Our Decentralized Library.</h2>
+          <h2 className="heading1 mod--hero" style={{ color: "white" }}>
+            Our Decentralized Library.
+          </h2>
           <p className="hero__p">
             Upload files,books,videos to our decentralized library for users around the world. View and download any
             file from our library without restrictions.

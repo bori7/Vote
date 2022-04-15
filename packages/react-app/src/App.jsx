@@ -24,7 +24,7 @@ import WalletLink from "walletlink";
 import Web3Modal from "web3modal";
 import "./App.css";
 import { Account, Address, AddressInput, Contract, Faucet, GasGauge, Header, Ramp, ThemeSwitch } from "./components";
-import { Header1, BigTransfer, Library, Benefits, Footer } from "./components";
+import { Header1, BigTransfer, Library, Benefits, Footer, PrivateLibrary } from "./components";
 import { INFURA_ID, NETWORK, NETWORKS } from "./constants";
 import { Transactor } from "./helpers";
 import { useContractConfig } from "./hooks";
@@ -274,6 +274,11 @@ function App(props) {
   // keep track of a variable from the contract in the local React state:
   const balance = useContractReader(readContracts, "YourCollectible", "balanceOf", [address]);
   console.log("🤗 balance:", balance);
+
+  // const privateLibrary = useContractReader(readContracts, "Library", "viewPrivateLib", [address]);
+
+  const privateLibrary = tx(writeContracts.Library.viewPrivateLib());
+  console.log("🤗 private_Library:", privateLibrary);
 
   // 📟 Listen for broadcast events
   const uploadEvents = useEventListener(readContracts, "Library", "PublicUpload", localProvider, 1);
@@ -692,15 +697,15 @@ function App(props) {
         />
         <Switch>
           <Route exact path="/">
-            <BigTransfer 
-            writeContracts={writeContracts}
-              tx={tx}
-              uploadEvents={uploadEvents}
-              mainnetProvider={mainnetProvider}/>
+            <BigTransfer writeContracts={writeContracts} tx={tx} />
             <Benefits />
           </Route>
           <Route path="/library">
-            <Library writeContracts={writeContracts} tx={tx} />
+            <Library uploadEvents={uploadEvents} />
+          </Route>
+
+          <Route path="/privatelibrary">
+            <PrivateLibrary writeContracts={writeContracts} tx={tx} privateLibrary={privateLibrary} />
           </Route>
           {/* <Route exact path="/">
             <div style={{ width: 640, margin: "auto", marginTop: 32, paddingBottom: 32 }}>

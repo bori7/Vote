@@ -22,3 +22,4 @@ export { default as BigTransfer } from "./BigTransfer";
 export { default as Library } from "./Library";
 export { default as Benefits } from "./Benefits";
 export { default as Footer } from "./Footer";
+export { default as PrivateLibrary } from "./PrivateLibrary";
