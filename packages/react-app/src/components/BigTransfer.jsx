@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FileUpload } from "react-ipfs-uploader";
+import "./BigTransfer.css";
 
 export default function BigTransfer({ writeContracts, tx }) {
   const mystyle = {
@@ -11,19 +12,22 @@ export default function BigTransfer({ writeContracts, tx }) {
 
   const [fileUrl, setFileUrl] = useState("");
 
+  const [fileName, setfileName] = useState("");
+
+  const [fileDescription, setfileDescription] = useState("");
+
   const submitContract = async () => {
     try {
-      let mmg = "This is a message";
       console.log("writeContracts", writeContracts);
-      const waveTnx = await tx(writeContracts.Library.PrivateUpload(mmg, fileUrl, mmg));
+      const waveTnx = await tx(writeContracts.Library.PrivateUpload(fileName, fileUrl, fileDescription));
       console.log("Minig..", waveTnx.hash);
 
       await waveTnx.wait();
       console.log("Minig---", waveTnx.hash);
 
       setFileUrl("");
-      setFile({});
-      console.log(file);
+      setfileName("");
+      setfileDescription("");
     } catch (e) {
       console.log(e);
     }
@@ -45,6 +49,17 @@ export default function BigTransfer({ writeContracts, tx }) {
           </p>
 
           <div>
+
+          <label>File name:</label>
+          <input type="text" placeholder="File Name" onChange={e => setfileName(e.target.value)} />
+                      
+          <br />
+
+          <label>File Description:</label>
+          <input type="text" placeholder="File Description" onChange={e => setfileDescription(e.target.value)} />
+
+          <br />
+          <label>File Select:</label>
             <FileUpload setUrl={setFileUrl} style={{ padding: "10" }} />
 
             {fileUrl && (
@@ -69,50 +84,6 @@ export default function BigTransfer({ writeContracts, tx }) {
                 </button>
               </>
             )}
-          </div>
-
-          <div
-            data-style="dash"
-            data-addfile="btn"
-            className="addfile-wrap"
-            style={{ padding: "10px", margin: "10px" }}
-          >
-            <div className="addfile">
-              <div data-addfile="hover" className="addfile__block-hover">
-                <div data-addfile="add" className="addfile__block mod--1">
-                  <div className="addfile__plus"></div>
-                  <div>
-                    <div className="addfile__txt mod--title">Add your files</div>
-                    <div className="addfile__txt mod--desc">Up to 20 GB</div>
-                  </div>
-                </div>
-
-                <div data-addfile="images" className="addfile__block mod--2">
-                  <div className="addfile__img-wrap">
-                    <img
-                      src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c33a7e53023206e75e6905_addfile_img.svg"
-                      loading="eager"
-                      alt=""
-                      className="addfile__img mod--0"
-                    />
-                    <img
-                      src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c33a7e53023206e75e6905_addfile_img.svg"
-                      loading="eager"
-                      data-addfile="img"
-                      alt=""
-                      className="addfile__img mod--1 active"
-                    />
-                    <img
-                      src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c33a7e53023206e75e6905_addfile_img.svg"
-                      loading="eager"
-                      data-addfile="img"
-                      alt=""
-                      className="addfile__img mod--2 active"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
