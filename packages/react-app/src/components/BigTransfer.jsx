@@ -1,57 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import React, { useState } from "react";
 import { FileUpload } from "react-ipfs-uploader";
-import abi from "../utils/Contract.json";
 
-export default function BigTransfer() {
+export default function BigTransfer({ writeContracts, tx }) {
   const mystyle = {
-    webkitTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-    mozTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-    msTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
-    transform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+    // WebkitTransform: "translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+    MozTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+    MsTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+    // transform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
   };
 
   const [fileUrl, setFileUrl] = useState("");
 
-  const contractAddress = "0xD046559971cECaCC6Cba63FE15C8Ef9EAdEB92d6";
-  const contractABI = abi.abi;
-
   const submitContract = async () => {
     try {
-      // setFileUrl("");
-      // console.log(file);
-      const { ethereum } = window;
+      let mmg = "This is a message";
+      console.log("writeContracts", writeContracts);
+      const waveTnx = await tx(writeContracts.Library.PrivateUpload(mmg, fileUrl, mmg));
+      console.log("Minig..", waveTnx.hash);
 
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+      await waveTnx.wait();
+      console.log("Minig---", waveTnx.hash);
 
-        /**
-         * Execute the actual wave from your smart contract
-         */
-        let mmg = "This is a message";
-        const waveTnx = await wavePortalContract.PrivateUpload(mmg, fileUrl, mmg, {
-          gasLimit: 300000,
-        });
-        console.log("Minig..", waveTnx.hash);
-
-        await waveTnx.wait();
-        console.log("Minig---", waveTnx.hash);
-
-        setFileUrl("");
-        setFile({});
-        console.log(file);
-      } else {
-        console.log("Ethereum object doesn't exist");
-      }
+      setFileUrl("");
+      setFile({});
+      console.log(file);
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-    <section id="uploadFiles" data-w-id="9a8c8c5e-18d4-aeb9-bc37-bac71fe0745b" className="section mod--hero">
+    <section
+      id="uploadFiles"
+      data-w-id="9a8c8c5e-18d4-aeb9-bc37-bac71fe0745b"
+      className="section mod--hero"
+      style={mystyle}
+    >
       <div className="content mod--hero u-upload-opacity">
         <div className="hero__content">
           <h2 className="heading1 mod--hero">Our Decentralized Library.</h2>
@@ -61,7 +45,7 @@ export default function BigTransfer() {
           </p>
 
           <div>
-            <FileUpload setUrl={setFileUrl} />
+            <FileUpload setUrl={setFileUrl} style={{ padding: "10" }} />
 
             {fileUrl && (
               <>
@@ -78,7 +62,7 @@ export default function BigTransfer() {
                 </div>
                 <button
                   className="waveButton"
-                  style={{ padding: "10px", margin: "10px", backgroundColor: "green", color: "white" }}
+                  style={{ padding: "15px", margin: "10px", backgroundColor: "green", color: "white" }}
                   onClick={submitContract}
                 >
                   Submit
@@ -87,7 +71,12 @@ export default function BigTransfer() {
             )}
           </div>
 
-          <div data-style="dash" data-addfile="btn" className="addfile-wrap">
+          <div
+            data-style="dash"
+            data-addfile="btn"
+            className="addfile-wrap"
+            style={{ padding: "10px", margin: "10px" }}
+          >
             <div className="addfile">
               <div data-addfile="hover" className="addfile__block-hover">
                 <div data-addfile="add" className="addfile__block mod--1">
@@ -133,7 +122,10 @@ export default function BigTransfer() {
           <img
             src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00ac6231e8007e01811_hero_illustr-01.svg"
             loading="eager"
-            //  style="-webkit-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+            style={{
+              WebkitTransform:
+                "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
             alt=""
             className="bg__img mod--1"
           />
@@ -142,7 +134,10 @@ export default function BigTransfer() {
           <img
             src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c0091b91c1cbb7cad7e1_hero_illustr-02.svg"
             loading="eager"
-            //  style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+            style={{
+              WebkitTransform:
+                "translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
             alt=""
             className="bg__img mod--2"
           />
@@ -151,7 +146,10 @@ export default function BigTransfer() {
           <img
             src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00acd123f38faf9fcf1_hero_illustr-04.svg"
             loading="eager"
-            //  style="-webkit-transform:translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+            style={{
+              WebkitTransform:
+                "translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-50px, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
             alt=""
             className="bg__img mod--3"
           />
@@ -160,7 +158,10 @@ export default function BigTransfer() {
           <img
             src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00afa26111b563f2134_hero_illustr-03.svg"
             loading="eager"
-            //  style="-webkit-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+            style={{
+              WebkitTransform:
+                "translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
             alt=""
             className="bg__img mod--4"
           />

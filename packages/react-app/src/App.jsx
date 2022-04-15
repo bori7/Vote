@@ -672,7 +672,21 @@ function App(props) {
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
       {/* <Header /> */}
-      <Header1 />
+      <Header1
+        acnt={
+          <Account
+            address={address}
+            localProvider={localProvider}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            price={price}
+            web3Modal={web3Modal}
+            loadWeb3Modal={loadWeb3Modal}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+            blockExplorer={blockExplorer}
+          />
+        }
+      />
       {/* {networkDisplay} */}
       <BrowserRouter>
         {/* <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
@@ -890,7 +904,7 @@ function App(props) {
           </Route>
           <Route path="/debugcontracts">
             <Contract
-              name="YourCollectible"
+              name="Library"
               signer={userSigner}
               provider={localProvider}
               address={address}
@@ -901,24 +915,9 @@ function App(props) {
         </Switch>
       </BrowserRouter>
 
-      {/* 👨‍💼 Your account is in the top right with a wallet at connect options */}
-      {/* <div style={{ position: "fixed", textAlign: "right", right: 0, top: 0, padding: 10 }}>
-        <Account
-          address={address}
-          localProvider={localProvider}
-          userSigner={userSigner}
-          mainnetProvider={mainnetProvider}
-          price={price}
-          web3Modal={web3Modal}
-          loadWeb3Modal={loadWeb3Modal}
-          logoutOfWeb3Modal={logoutOfWeb3Modal}
-          blockExplorer={blockExplorer}
-        />
-        {faucetHint}
-      </div> */}
       <div>
         <main className="main">
-          <BigTransfer />
+          <BigTransfer writeContracts={writeContracts} tx={tx} />
           <Benefits />
           <Footer />
         </main>
