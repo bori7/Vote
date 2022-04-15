@@ -276,8 +276,8 @@ function App(props) {
   console.log("🤗 balance:", balance);
 
   // 📟 Listen for broadcast events
-  const transferEvents = useEventListener(readContracts, "YourCollectible", "Transfer", localProvider, 1);
-  console.log("📟 Transfer events:", transferEvents);
+  const uploadEvents = useEventListener(readContracts, "Library", "PublicUpload", localProvider, 1);
+  console.log("📟 Transfer events:", uploadEvents);
 
   //
   // 🧠 This effect will update yourCollectibles by polling when your balance changes
@@ -692,7 +692,12 @@ function App(props) {
         />
         <Switch>
           <Route exact path="/">
-            <BigTransfer writeContracts={writeContracts} tx={tx} />
+            <BigTransfer
+              writeContracts={writeContracts}
+              tx={tx}
+              uploadEvents={uploadEvents}
+              mainnetProvider={mainnetProvider}
+            />
           </Route>
           <Route path="/library">
             <Library writeContracts={writeContracts} tx={tx} />

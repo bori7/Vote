@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FileUpload } from "react-ipfs-uploader";
+import { Input, Checkbox, Collapse, Card, List } from "antd";
+import { Address } from "./";
 import "./BigTransfer.css";
 
-export default function BigTransfer({ writeContracts, tx }) {
+export default function BigTransfer({ writeContracts, tx, uploadEvents, mainnetProvider }) {
   const mystyle = {
     // WebkitTransform: "translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
     MozTransform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
@@ -10,7 +12,11 @@ export default function BigTransfer({ writeContracts, tx }) {
     // transform: "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
   };
 
+  const { Panel } = Collapse;
+
   const [fileUrl, setFileUrl] = useState("");
+
+  const [priv, setPriv] = useState(false);
 
   const [fileName, setfileName] = useState("");
 
@@ -19,8 +25,13 @@ export default function BigTransfer({ writeContracts, tx }) {
   const submitContract = async () => {
     try {
       console.log("writeContracts", writeContracts);
+      let waveTnx;
+      if (priv) {
+        waveTnx = await tx(writeContracts.Library.PrivateUpload(fileName, fileUrl, fileDescription));
+      } else {
+        waveTnx = await tx(writeContracts.Library.publicUpload(fileName, fileUrl, fileDescription));
+      }
 
-      const waveTnx = await tx(writeContracts.Library.publicUpload(fileName, fileUrl, fileDescription));
       console.log("Minig..", waveTnx.hash);
 
       await waveTnx.wait();
@@ -51,12 +62,12 @@ export default function BigTransfer({ writeContracts, tx }) {
 
           <div>
             <label>File name:</label>
-            <input type="text" placeholder="File Name" onChange={e => setfileName(e.target.value)} value={fileName} />
+            <Input type="text" placeholder="File Name" onChange={e => setfileName(e.target.value)} value={fileName} />
 
             <br />
 
             <label>File Description:</label>
-            <input
+            <Input
               type="text"
               placeholder="File Description"
               onChange={e => setfileDescription(e.target.value)}
@@ -69,7 +80,7 @@ export default function BigTransfer({ writeContracts, tx }) {
 
             {fileUrl && (
               <>
-                <div>
+                <div style={{ backgroundColor: "green", margin: "7" }}>
                   FileUrl :{" "}
                   <a
                     href={fileUrl}
@@ -84,11 +95,22 @@ export default function BigTransfer({ writeContracts, tx }) {
                   className="waveButton"
                   style={{ padding: "15px", margin: "10px", backgroundColor: "green", color: "white" }}
                   onClick={submitContract}
+                  disabled={!fileUrl || !fileName || !fileDescription}
                 >
                   Submit
                 </button>
               </>
             )}
+            <Checkbox
+              checked={priv}
+              onChange={e => {
+                setPriv(!priv);
+
+                console.log(priv);
+              }}
+            >
+              Make Private
+            </Checkbox>
           </div>
         </div>
       </div>
