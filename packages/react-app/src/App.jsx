@@ -24,7 +24,7 @@ import WalletLink from "walletlink";
 import Web3Modal from "web3modal";
 import "./App.css";
 import { Account, Address, AddressInput, Contract, Faucet, GasGauge, Header, Ramp, ThemeSwitch } from "./components";
-import { Header1, BigTransfer, Benefits, Footer } from "./components";
+import { Header1, BigTransfer, Library, Benefits, Footer } from "./components";
 import { INFURA_ID, NETWORK, NETWORKS } from "./constants";
 import { Transactor } from "./helpers";
 import { useContractConfig } from "./hooks";
@@ -672,21 +672,7 @@ function App(props) {
     <div className="App">
       {/* ✏️ Edit the header and change the title to your project name */}
       {/* <Header /> */}
-      <Header1
-        acnt={
-          <Account
-            address={address}
-            localProvider={localProvider}
-            userSigner={userSigner}
-            mainnetProvider={mainnetProvider}
-            price={price}
-            web3Modal={web3Modal}
-            loadWeb3Modal={loadWeb3Modal}
-            logoutOfWeb3Modal={logoutOfWeb3Modal}
-            blockExplorer={blockExplorer}
-          />
-        }
-      />
+      
       {/* {networkDisplay} */}
       <BrowserRouter>
         {/* <Menu style={{ textAlign: "center" }} selectedKeys={[route]} mode="horizontal">
@@ -916,11 +902,35 @@ function App(props) {
       </BrowserRouter>
 
       <div>
-        <main className="main">
-          <BigTransfer writeContracts={writeContracts} tx={tx} />
-          <Benefits />
-          <Footer />
-        </main>
+        <BrowserRouter>
+            <Header1
+              acnt={
+                <Account
+                  address={address}
+                  localProvider={localProvider}
+                  userSigner={userSigner}
+                  mainnetProvider={mainnetProvider}
+                  price={price}
+                  web3Modal={web3Modal}
+                  loadWeb3Modal={loadWeb3Modal}
+                  logoutOfWeb3Modal={logoutOfWeb3Modal}
+                  blockExplorer={blockExplorer}
+                />
+              }
+            />
+          <main className="main">
+            <Switch>
+              <Route path="/">
+                <BigTransfer writeContracts={writeContracts} tx={tx} />
+              </Route>
+              <Route path="/library">
+                <Library writeContracts={writeContracts} tx={tx} />
+              </Route>
+            </Switch>
+            <Benefits />
+            <Footer />
+          </main>
+        </BrowserRouter>
       </div>
     </div>
   );

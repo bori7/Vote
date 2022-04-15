@@ -74,42 +74,10 @@ export default function Footer() {
                         <nav className="footer__drop-list w-dropdown-list">
                             <ul role="list" className="footer__list">
                                 <li className="footer__list-item">
-                                    <a data-anim="link" href="#" target="_blank" className="footer__nav-link w-inline-block">
+                                    <a data-anim="link" href="https://github.com/Epic-Byte" target="_blank" className="footer__nav-link w-inline-block">
                                         <div className="nav-txt-anim">
-                                            <div className="nav-txt mod--over">Facebook</div>
-                                            <div className="nav-txt">Facebook</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li className="footer__list-item">
-                                    <a data-anim="link" href="#" target="_blank" className="footer__nav-link w-inline-block">
-                                        <div className="nav-txt-anim">
-                                            <div className="nav-txt mod--over">Instagram</div>
-                                            <div className="nav-txt">Instagram</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li className="footer__list-item">
-                                    <a data-anim="link" href="#" target="_blank" className="footer__nav-link w-inline-block">
-                                        <div className="nav-txt-anim">
-                                            <div className="nav-txt mod--over">Linked In</div>
-                                            <div className="nav-txt">Linked In</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li className="footer__list-item">
-                                    <a data-anim="link" href="#" target="_blank" className="footer__nav-link w-inline-block">
-                                        <div className="nav-txt-anim">
-                                            <div className="nav-txt mod--over">Behance</div>
-                                            <div className="nav-txt">Behance</div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li className="footer__list-item">
-                                    <a data-anim="link" href="#" target="_blank" className="footer__nav-link w-inline-block">
-                                        <div className="nav-txt-anim">
-                                            <div className="nav-txt mod--over">Dribbble</div>
-                                            <div className="nav-txt">Dribbble</div>
+                                            <div className="nav-txt mod--over">Github</div>
+                                            <div className="nav-txt">Github</div>
                                         </div>
                                     </a>
                                 </li>
@@ -122,7 +90,7 @@ export default function Footer() {
                 <div className="footer__col mod--1 mod--bottom">
                     <a href="https://www.halo-lab.com/" target="_blank" className="footer__copyright w-inline-block">
                         <img src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1b5d6cb8a000ae4fa6ed5_logo-copyright.svg" loading="eager" alt="" className="footer__copyright-logo"/>
-                        <div>2021 Team Call_Byte. All rights reserved</div>
+                        <div>2022 Team Call_Byte. All rights reserved</div>
                     </a>
                 </div>
                 <div className="footer__col mod--3 mod--bottom">
@@ -131,11 +99,6 @@ export default function Footer() {
                             <div className="droplang__arrow"></div>
                             <div>English</div>
                         </div>
-                        <nav className="droplang__list w-dropdown-list">
-                            <a href="/" aria-current="page" className="droplang__list-link w-dropdown-link w--current">English</a>
-                            <a href="#" className="droplang__list-link w-dropdown-link">Français</a>
-                            <a href="#" className="droplang__list-link w-dropdown-link">Russian</a>
-                        </nav>
                     </div>
                 </div>
                 <div data-w-id="1ebd09bc-975c-910f-0331-5939e65d2cb5" className="footer__line"></div>
