@@ -38,7 +38,7 @@ export default function Library({ uploadEvents }) {
                             </div>
                             <h3 className="work__title">{item.args[2]}</h3>
                             <p className="work__p">{item.args[2]}</p>
-                            <a href={item.args[1]} download={item.args[2]}>
+                            <a href={item.args[1]} download="">
                               Download
                             </a>
                           </div>
