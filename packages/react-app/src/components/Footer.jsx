@@ -6,7 +6,7 @@ export default function Footer() {
     <footer id="About" data-w-id="5a902773-1dd3-2c0e-6f8b-6e47cae613d7" className="footer">
         <div data-w-id="682e79bb-f4d4-aca3-65b1-e2dce7b2d527" className="content">
             <div data-w-id="611e80fe-41d5-4cae-c50f-d3d115a1656e" className="footer__offer">
-                <h2 className="footer__offer-heading">Get started with our Library?</h2>
+                <h2 className="footer__offer-heading">Get started with our Library.</h2>
                 <div data-style="dash2" className="footer__offer-btn-wrap">
                     <a href="#" className="btn mod--offer w-inline-block">
                         <div className="btn-offer__arrow-wrap">

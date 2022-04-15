@@ -692,12 +692,12 @@ function App(props) {
         />
         <Switch>
           <Route exact path="/">
-            <BigTransfer
-              writeContracts={writeContracts}
+            <BigTransfer 
+            writeContracts={writeContracts}
               tx={tx}
               uploadEvents={uploadEvents}
-              mainnetProvider={mainnetProvider}
-            />
+              mainnetProvider={mainnetProvider}/>
+            <Benefits />
           </Route>
           <Route path="/library">
             <Library writeContracts={writeContracts} tx={tx} />
@@ -875,7 +875,6 @@ function App(props) {
         </Switch>
       </BrowserRouter>
 
-      <Benefits />
       <Footer />
     </div>
   );
