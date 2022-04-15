@@ -693,6 +693,7 @@ function App(props) {
         <Switch>
           <Route exact path="/">
             <BigTransfer writeContracts={writeContracts} tx={tx} />
+            <Benefits />
           </Route>
           <Route path="/library">
             <Library writeContracts={writeContracts} tx={tx} />
@@ -870,7 +871,6 @@ function App(props) {
         </Switch>
       </BrowserRouter>
 
-      <Benefits />
       <Footer />
     </div>
   );

@@ -43,7 +43,7 @@ export default function BigTransfer({ writeContracts, tx }) {
     >
       <div className="content mod--hero u-upload-opacity">
         <div className="hero__content">
-          <h2 className="heading1 mod--hero">Our Decentralized Library.</h2>
+          <h2 className="heading1 mod--hero" style={{ color: "white" }}>Our Decentralized Library.</h2>
           <p className="hero__p">
             Upload files,books,videos to our decentralized library for users around the world. View and download any
             file from our library without restrictions.

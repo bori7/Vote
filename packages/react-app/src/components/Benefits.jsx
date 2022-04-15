@@ -6,7 +6,7 @@ export default function Benefits() {
     <section id="Benefits" className="section mod--work">
         <div data-w-id="23aa82da-d192-8dd9-fd6c-34b1289acbf1" className="content">
             <h2 className="heading--center">
-                    Decentralized Library?
+            Benefits of a Decentralized Library.
             </h2>
             <div data-swiper="work" className="swiper mod--work">
                 <div className="swiper-wrapper">
