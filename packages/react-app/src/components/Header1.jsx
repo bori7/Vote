@@ -53,6 +53,19 @@ export default function Header1({ acnt, setRoute }) {
                   <div className="nav-txt">Private Library</div>
                 </div>
               </Link>
+              <Link
+                to="/history"
+                data-anim="link"
+                className="header__nav-link w-inline-block"
+                onClick={() => {
+                  setRoute("/history");
+                }}
+              >
+                <div className="nav-txt-anim">
+                  <div className="nav-txt mod--over">Sharing History</div>
+                  <div className="nav-txt">Sharing History</div>
+                </div>
+              </Link>
               <a href="#Benefits" data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">Benefits</div>
