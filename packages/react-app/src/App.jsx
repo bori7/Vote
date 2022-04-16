@@ -24,7 +24,7 @@ import WalletLink from "walletlink";
 import Web3Modal from "web3modal";
 import "./App.css";
 import { Account, Address, AddressInput, Contract, Faucet, GasGauge, Header, Ramp, ThemeSwitch } from "./components";
-import { Header1, BigTransfer, Library, Benefits, Footer, PrivateLibrary } from "./components";
+import { Header1, BigTransfer, Library, Benefits, Footer, PrivateLibrary, SharingHistory } from "./components";
 import { INFURA_ID, NETWORK, NETWORKS } from "./constants";
 import { Transactor } from "./helpers";
 import { useContractConfig } from "./hooks";
@@ -708,6 +708,10 @@ function App(props) {
               privateLibrary={privateLibrary}
               mainnetProvider={mainnetProvider}
             />
+          </Route>
+
+          <Route path="/history">
+            <SharingHistory uploadEvents={uploadEvents} />
           </Route>
 
           {/* <Route exact path="/">

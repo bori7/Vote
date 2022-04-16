@@ -23,3 +23,4 @@ export { default as Library } from "./Library";
 export { default as Benefits } from "./Benefits";
 export { default as Footer } from "./Footer";
 export { default as PrivateLibrary } from "./PrivateLibrary";
+export { default as SharingHistory } from "./SharingHistory";
