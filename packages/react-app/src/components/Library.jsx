@@ -9,7 +9,7 @@ export default function Library({ uploadEvents }) {
           Library
         </h1>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {uploadEvents ? (
+          {uploadEvents.length ? (
             uploadEvents.map((item, index) => (
               <div key={item.transactionHash + item.blockNumber + "_"}>
                 <div className="flex-personal">
@@ -38,7 +38,7 @@ export default function Library({ uploadEvents }) {
                             />
                           </div>
                         </div>
-                        <h3 className="work__title">{item.args[2]}</h3>
+                        <h3 className="work__title">{item.args[0]}</h3>
                         <p className="work__p">{item.args[2]}</p>
                         <a href={item.args[1]} download="" target="_blank">
                           Download

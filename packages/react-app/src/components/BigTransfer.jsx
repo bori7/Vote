@@ -92,7 +92,7 @@ export default function BigTransfer({ writeContracts, tx }) {
                 </div>
                 <Button
                   className="waveButton"
-                  style={{ padding: "15px", margin: "10px", backgroundColor: "green", color: "white" }}
+                  style={{ margin: "10px", color: "green" }}
                   onClick={submitContract}
                   disabled={!fileUrl || !fileName || !fileDescription}
                 >

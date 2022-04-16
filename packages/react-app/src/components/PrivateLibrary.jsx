@@ -5,9 +5,9 @@ import { AddressInput } from "./";
 export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mainnetProvider }) {
   const [shareToAddresses, setShareToAddresses] = useState({});
 
-  useEffect(() => {
-    console.log("privateLibrary", privateLibrary);
-  }, [privateLibrary]);
+  //   useEffect(() => {
+  //     console.log("privateLibrary", privateLibrary);
+  //   }, [privateLibrary]);
 
   return (
     <div style={{ backgroundColor: "#636C78" }}>
@@ -16,7 +16,7 @@ export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mai
           Private Library
         </h1>
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {privateLibrary ? (
+          {privateLibrary?.length ? (
             privateLibrary.map((item, index) => (
               <div key={index + "_" + item.address} style={{ margin: 10 }}>
                 <div data-w-id="23aa82da-d192-8dd9-fd6c-34b1289acbf1" className="content">

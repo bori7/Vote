@@ -280,7 +280,10 @@ function App(props) {
 
   // 📟 Listen for broadcast events
   const uploadEvents = useEventListener(readContracts, "Library", "PublicUpload", localProvider, 1);
-  console.log("📟 Transfer events:", uploadEvents);
+  console.log("📟 Upload events:", uploadEvents);
+
+  const shareEvents = useEventListener(readContracts, "Library", "Share", localProvider, 1);
+  console.log("📟 Share events:", shareEvents);
 
   //
   // 🧠 This effect will update yourCollectibles by polling when your balance changes
