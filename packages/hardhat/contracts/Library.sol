@@ -1,8 +1,8 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.4;
 
 
-contract smartLibrary
+contract Library
 {
     /*
     *@notice Instance of Library Item
@@ -30,7 +30,7 @@ contract smartLibrary
     /**
     @notice Events to log public library
     */
-    event PublicUpload(uint256 _pcount, string indexed _name, string _Link, string _description);
+    event PublicUpload(string _name, string _Link, string _description);
     event Share(address sharer, string _filename, address _to);
     
 
@@ -62,10 +62,10 @@ contract smartLibrary
     function publicUpload(string memory _name, string memory _Link, string memory _description) public returns(string memory)
     {
         Pcount++;
-        uint256 pcount= Pcount;
+        uint256 pcount = Pcount;
         content memory Content = content(pcount,_name, _Link, _description);
         publicLib.push(Content);
-        emit PublicUpload(pcount,_name, _Link, _description);
+        emit PublicUpload(_name, _Link, _description);
          return ("Added to Public Library");
     }
 
@@ -106,6 +106,6 @@ contract smartLibrary
     {
         content memory c = userLib[msg.sender][_ID];
          publicLib.push(c);
-          emit PublicUpload(c.ID, c.name, c.Link, c.description);
+          emit PublicUpload(c.name, c.Link, c.description);
     }
 }
