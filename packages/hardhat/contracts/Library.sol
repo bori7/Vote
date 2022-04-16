@@ -28,7 +28,7 @@ contract Library
     /**
     @notice Events to log public library
     */
-    event PublicUpload(string indexed _name, string _Link, string _description);
+    event PublicUpload(string _name, string _Link, string _description);
     
 
     /*
