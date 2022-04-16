@@ -42,7 +42,7 @@ export default function PrivateLibrary({ shareEvents, mainnetProvider, address }
                       alignItems: "start",
                     }}
                   >
-                    <p style={{ marginRight: 6 }}>Transfered: {"  "}</p>
+                    <p style={{ marginRight: 6 }}>Shared: {"  "}</p>
                     <span style={{ marginRight: 6, fontWeight: 826 }}>#{item.args[1]} </span>
                     <p style={{ marginLRight: 16 }}>to &nbsp; &nbsp; {"    "}</p>
                     <Address address={item.args[2]} ensProvider={mainnetProvider} fontSize={16} />
