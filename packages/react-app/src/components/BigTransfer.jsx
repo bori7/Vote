@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FileUpload } from "react-ipfs-uploader";
-import { Input, Checkbox } from "antd";
+import { Input, Checkbox, Button } from "antd";
 import "./BigTransfer.css";
 
 export default function BigTransfer({ writeContracts, tx }) {
@@ -90,14 +90,14 @@ export default function BigTransfer({ writeContracts, tx }) {
                     {fileUrl}
                   </a>
                 </div>
-                <button
+                <Button
                   className="waveButton"
                   style={{ padding: "15px", margin: "10px", backgroundColor: "green", color: "white" }}
                   onClick={submitContract}
                   disabled={!fileUrl || !fileName || !fileDescription}
                 >
                   Submit
-                </button>
+                </Button>
               </>
             )}
             <Checkbox

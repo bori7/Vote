@@ -275,10 +275,8 @@ function App(props) {
   const balance = useContractReader(readContracts, "YourCollectible", "balanceOf", [address]);
   console.log("🤗 balance:", balance);
 
-  // const privateLibrary = useContractReader(readContracts, "Library", "viewPrivateLib", [address]);
-
-  // const privateLibrary = tx(writeContracts.Library.viewPrivateLib());
-  // console.log("🤗 private_Library:", privateLibrary);
+  const privateLibrary = useContractReader(writeContracts, "Library", "viewPrivateLib");
+  console.log("🤗 privateLibrary:", privateLibrary);
 
   // 📟 Listen for broadcast events
   const uploadEvents = useEventListener(readContracts, "Library", "PublicUpload", localProvider, 1);
@@ -698,15 +696,20 @@ function App(props) {
         <Switch>
           <Route exact path="/">
             <BigTransfer writeContracts={writeContracts} tx={tx} />
-            <Benefits />
           </Route>
           <Route path="/library">
             <Library uploadEvents={uploadEvents} />
           </Route>
 
           <Route path="/privatelibrary">
-            <PrivateLibrary writeContracts={writeContracts} tx={tx} privateLibrary={"sdsd"} />
+            <PrivateLibrary
+              writeContracts={writeContracts}
+              tx={tx}
+              privateLibrary={privateLibrary}
+              mainnetProvider={mainnetProvider}
+            />
           </Route>
+
           {/* <Route exact path="/">
             <div style={{ width: 640, margin: "auto", marginTop: 32, paddingBottom: 32 }}>
               <Button 
@@ -879,7 +882,7 @@ function App(props) {
           </Route> */}
         </Switch>
       </BrowserRouter>
-
+      <Benefits />
       <Footer />
     </div>
   );
