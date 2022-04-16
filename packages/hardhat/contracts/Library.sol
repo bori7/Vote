@@ -72,6 +72,7 @@ contract Library
         
         userLib[_to[i]][_ID] = content(c.name, c.Link, c.description);
         emit Share(c.name, _to[i]);
+
         }
         return "shared";
 
