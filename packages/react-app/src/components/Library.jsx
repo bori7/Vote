@@ -1,16 +1,25 @@
 import React, { useState } from "react";
-import { Empty } from "antd";
+import { Empty, Input } from "antd";
 
 export default function Library({ uploadEvents }) {
+  const [searchEvents, setSearchEvents] = useState(uploadEvents);
+  const [val, setVal] = useState("");
+  const onSearch = e => {
+    setVal(e.target.value);
+    console.log(val);
+    setSearchEvents(uploadEvents.filter(item => item.args._name.includes(val)));
+  };
+
   return (
     <div style={{ backgroundColor: "#636C78" }}>
       <section id="#Library" data-w-id="9a8c8c5e-18d4-aeb9-bc37-bac71fe0745b" className="section mod--hero ">
         <h1 className="heading--center" style={{ color: "#fff" }}>
           Library
         </h1>
+        <Input placeholder="search by title" onChange={onSearch} value={val} style={{ width: "70%", margin: "20" }} />
         <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {uploadEvents.length ? (
-            uploadEvents.map((item, index) => (
+          {searchEvents?.length ? (
+            searchEvents?.map((item, index) => (
               <div key={item.transactionHash + item.blockNumber + "_"}>
                 <div className="flex-personal">
                   <div data-w-id="23aa82da-d192-8dd9-fd6c-34b1289acbf1" className="content">
