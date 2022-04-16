@@ -16,7 +16,7 @@ export default function Library({ uploadEvents }) {
                   <div data-w-id="23aa82da-d192-8dd9-fd6c-34b1289acbf1" className="content">
                     <div data-w-id="f29f62bd-d2b8-d92f-ba3b-fec3f8494fcb" className="swiper-slide mod--work">
                       <div className="work__card">
-                        <div className="work__ico-wrap">
+                        <div className="work__ico-wrap" style={{ width: "100%" }}>
                           <div className="work__ico-anim">
                             <img
                               src={

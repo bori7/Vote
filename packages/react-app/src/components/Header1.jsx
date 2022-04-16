@@ -85,6 +85,7 @@ export default function Header1({ acnt, setRoute }) {
             </div>
             <div className="header__col">
               {acnt}
+
               <div className="header__humburger-wrap">
                 <div className="header__humb">
                   <div className="header__humb-line mod--1"></div>
@@ -96,6 +97,7 @@ export default function Header1({ acnt, setRoute }) {
             </div>
           </div>
         </div>
+
         {/* </div> */}
         <div className="menu header-menu-display-c">
           <div className="menu__content menu-content-opacity-height-c">

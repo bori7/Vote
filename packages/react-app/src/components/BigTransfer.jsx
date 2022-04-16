@@ -52,7 +52,7 @@ export default function BigTransfer({ writeContracts, tx }) {
       <div className="content mod--hero u-upload-opacity">
         <div className="hero__content">
           <h2 className="heading1 mod--hero" style={{ color: "white" }}>
-            Our Decentralized Library.
+            Make your data immortal
           </h2>
           <p className="hero__p">
             Upload files,books,videos to our decentralized library for users around the world. View and download any
@@ -75,7 +75,7 @@ export default function BigTransfer({ writeContracts, tx }) {
 
             <br />
             <label>File Select:</label>
-            <FileUpload setUrl={setFileUrl} style={{ padding: "10" }} />
+            <FileUpload setUrl={setFileUrl} style={{ margin: "20" }} />
 
             {fileUrl && (
               <>
@@ -100,16 +100,18 @@ export default function BigTransfer({ writeContracts, tx }) {
                 </Button>
               </>
             )}
-            <Switch
-              checkedChildren="Public"
-              unCheckedChildren="Private"
-              defaultChecked
-              onChange={e => {
-                setPriv(!priv);
+            <div style={{ marginTop: "30", paddingTop: "30" }}>
+              <Switch
+                checkedChildren="Public"
+                unCheckedChildren="Private"
+                defaultChecked
+                onChange={e => {
+                  setPriv(!priv);
 
-                console.log(priv);
-              }}
-            />
+                  console.log(priv);
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
