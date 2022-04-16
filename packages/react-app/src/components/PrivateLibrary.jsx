@@ -48,7 +48,7 @@ export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mai
                       </div>
                       <h3 className="work__title">{item.name}</h3>
                       <p className="work__p">{item.description}</p>
-                      <a href={item.Link} download={item.name} target="_blank">
+                      <a href={`${item.Link}`} download={item.name} target="_blank">
                         Download
                       </a>
 
