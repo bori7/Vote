@@ -29,6 +29,7 @@ contract Library
     @notice Events to log public library
     */
     event PublicUpload(string _name, string _Link, string _description);
+    event Share(string _name, string _Link, string _description);
     
 
     /*
@@ -70,6 +71,7 @@ contract Library
         require(_to[i] != address(0),"you cant share to zero address");
         
         userLib[_to[i]][_ID] = content(c.name, c.Link, c.description);
+        emit Share(c.name, c.Link, c.description);
         }
         return "shared";
 
