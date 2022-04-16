@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FileUpload } from "react-ipfs-uploader";
-import { Input, Checkbox, Button } from "antd";
+import { Input, Checkbox, Button, Switch } from "antd";
 import "./BigTransfer.css";
 
 export default function BigTransfer({ writeContracts, tx }) {
@@ -100,16 +100,16 @@ export default function BigTransfer({ writeContracts, tx }) {
                 </Button>
               </>
             )}
-            <Checkbox
-              checked={priv}
+            <Switch
+              checkedChildren="Public"
+              unCheckedChildren="Private"
+              defaultChecked
               onChange={e => {
                 setPriv(!priv);
 
                 console.log(priv);
               }}
-            >
-              Make Private
-            </Checkbox>
+            />
           </div>
         </div>
       </div>
