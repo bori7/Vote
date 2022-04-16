@@ -41,7 +41,7 @@ export default function Library({ uploadEvents }) {
                         <h3 className="work__title">{item.args[0]}</h3>
                         <p className="work__p">{item.args[2]}</p>
                         <a href={item.args[1]} download="" target="_blank">
-                          Download
+                          View
                         </a>
                       </div>
                     </div>
@@ -52,6 +52,31 @@ export default function Library({ uploadEvents }) {
           ) : (
             <Empty />
           )}
+        </div>
+        <div className="bg__grey u-big-grey"></div>
+        <div className="bg__img-wrap mod--1">
+          <img
+            src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00ac6231e8007e01811_hero_illustr-01.svg"
+            loading="eager"
+            style={{
+              WebkitTransform:
+                "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
+            alt=""
+            className="bg__img mod--1"
+          />
+        </div>
+        <div className="bg__img-wrap mod--4">
+          <img
+            src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00afa26111b563f2134_hero_illustr-03.svg"
+            loading="eager"
+            style={{
+              WebkitTransform:
+                "translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
+            alt=""
+            className="bg__img mod--4"
+          />
         </div>
       </section>
     </div>

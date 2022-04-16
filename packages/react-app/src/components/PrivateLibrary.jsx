@@ -5,10 +5,6 @@ import { AddressInput } from "./";
 export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mainnetProvider }) {
   const [shareToAddresses, setShareToAddresses] = useState({});
 
-  //   useEffect(() => {
-  //     console.log("privateLibrary", privateLibrary);
-  //   }, [privateLibrary]);
-
   return (
     <div style={{ backgroundColor: "#636C78" }}>
       <section id="#Library" data-w-id="9a8c8c5e-18d4-aeb9-bc37-bac71fe0745b" className="section mod--hero ">
@@ -49,7 +45,7 @@ export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mai
                       <h3 className="work__title">{item.name}</h3>
                       <p className="work__p">{item.description}</p>
                       <a href={`${item.Link}`} download={item.name} target="_blank">
-                        Download
+                        View
                       </a>
 
                       <div>
@@ -77,7 +73,7 @@ export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mai
                           onClick={() => {
                             console.log("writeContracts", writeContracts);
                             // let id = 1;
-                            tx(writeContracts.Library.share([shareToAddresses[index]], index));
+                            tx(writeContracts.Library.share([shareToAddresses[index]], index + 1));
                           }}
                         >
                           share
@@ -91,6 +87,31 @@ export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mai
           ) : (
             <Empty />
           )}
+        </div>
+        <div className="bg__grey u-big-grey"></div>
+        <div className="bg__img-wrap mod--1">
+          <img
+            src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00ac6231e8007e01811_hero_illustr-01.svg"
+            loading="eager"
+            style={{
+              WebkitTransform:
+                "translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
+            alt=""
+            className="bg__img mod--1"
+          />
+        </div>
+        <div className="bg__img-wrap mod--4">
+          <img
+            src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00afa26111b563f2134_hero_illustr-03.svg"
+            loading="eager"
+            style={{
+              WebkitTransform:
+                "translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(100%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+            }}
+            alt=""
+            className="bg__img mod--4"
+          />
         </div>
       </section>
     </div>

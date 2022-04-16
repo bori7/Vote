@@ -714,7 +714,7 @@ function App(props) {
           </Route>
 
           <Route path="/history">
-            <SharingHistory uploadEvents={uploadEvents} />
+            <SharingHistory shareEvents={shareEvents} mainnetProvider={mainnetProvider} address={address} />
           </Route>
 
           {/* <Route exact path="/">

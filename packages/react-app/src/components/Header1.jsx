@@ -9,7 +9,11 @@ export default function Header1({ acnt, setRoute }) {
         <div className="content mod--header">
           <div className="header__columns">
             <div className="header__col">
-              <a href="#" className="header__logo-link w-inline-block header-logo-link-a">
+              <a
+                href="/"
+                className="header__logo-link w-inline-block header-logo-link-a"
+                style={{ fontSize: "1.5rem", color: "white" }}
+              >
                 <img
                   src="https://uploads-ssl.webflow.com/61c1b5d6cb8a0046c7fa6e82/61c1c00a151e6a55be490586_logo.svg"
                   loading="lazy"
@@ -62,11 +66,11 @@ export default function Header1({ acnt, setRoute }) {
                 }}
               >
                 <div className="nav-txt-anim">
-                  <div className="nav-txt mod--over">Sharing History</div>
-                  <div className="nav-txt">Sharing History</div>
+                  <div className="nav-txt mod--over">Shared</div>
+                  <div className="nav-txt">Shared</div>
                 </div>
               </Link>
-              <a href="#Benefits" data-anim="link" className="header__nav-link w-inline-block">
+              {/* <a href="#Benefits" data-anim="link" className="header__nav-link w-inline-block">
                 <div className="nav-txt-anim">
                   <div className="nav-txt mod--over">Benefits</div>
                   <div className="nav-txt">Benefits</div>
@@ -77,7 +81,7 @@ export default function Header1({ acnt, setRoute }) {
                   <div className="nav-txt mod--over">About</div>
                   <div className="nav-txt">About</div>
                 </div>
-              </a>
+              </a> */}
             </div>
             <div className="header__col">
               {acnt}
