@@ -1,88 +1,76 @@
 // //
 // // this script executes when you run 'yarn test'
-// //
-// // you can also test remote submissions like:
-// // CONTRACT_ADDRESS=0x43Ab1FCd430C1f20270C2470f857f7a006117bbb yarn test --network rinkeby
-// //
-// // you can even run mint commands if the tests pass like:
-// // yarn test && echo "PASSED" || echo "FAILED"
-// //
 
-// const hre = require("hardhat");
+const hre = require("hardhat");
 
-// const { ethers } = hre;
-// const { use, expect } = require("chai");
-// const { solidity } = require("ethereum-waffle");
+const { ethers } = hre;
+const { use, expect } = require("chai");
+const { solidity } = require("ethereum-waffle");
 
-// use(solidity);
+use(solidity);
 
-// describe("🚩 Challenge 0: 🎟 Simple NFT Example 🤓", function () {
-//   this.timeout(120000);
+describe("Library 🤖", function () {
+  let library;
+  let owner;
+  let addr1;
+  let addr2;
+  let addr3;
+  let addrs;
 
-//   let myContract;
+  const ipfsLink =
+    "https://ipfs.io/ipfs/QmQXVwPnww7Ua1aQt2pLdcdDt2dZKtQqTYHR4EX4U7ErJE";
 
-//   // console.log("hre:",Object.keys(hre)) // <-- you can access the hardhat runtime env here
+  beforeEach(async function () {
+    // create the smart contract object to test from
+    [owner, addr1, addr2, addr3, ...addrs] = await ethers.getSigners();
+    const Library = await ethers.getContractFactory("Library");
+    library = await Library.deploy();
+  });
 
-//   describe("YourCollectible", function () {
-//     if (process.env.CONTRACT_ADDRESS) {
-//       it("Should connect to external contract", async function () {
-//         myContract = await ethers.getContractAt(
-//           "YourCollectible",
-//           process.env.CONTRACT_ADDRESS
-//         );
-//         console.log(
-//           "     🛰 Connected to external contract",
-//           myContract.address
-//         );
-//       });
-//     } else {
-//       it("Should deploy YourCollectible", async function () {
-//         const YourCollectible = await ethers.getContractFactory(
-//           "YourCollectible"
-//         );
-//         myContract = await YourCollectible.deploy();
-//       });
-//     }
+  describe("Upload", function () {
+    it("private upload", async function () {
+      await library.PrivateUpload("Sam Book", ipfsLink, "My Personal Photo");
+      const ownerPrivateLib = await library.viewPrivateLib();
+      expect(ownerPrivateLib[0].Link).to.equal(ipfsLink);
+    });
 
-//     describe("mintItem()", function () {
-//       it("Should be able to mint an NFT", async function () {
-//         const [owner] = await ethers.getSigners();
+    it("public upload", async function () {
+      await library.publicUpload(
+        "Sam Public Book",
+        ipfsLink,
+        "My Public Personal Photo"
+      );
+      const publicLib = await library.publicLib(0);
+      expect(publicLib.name).to.equal("Sam Public Book");
+    });
+  });
 
-//         console.log("\t", " 🧑‍🏫 Tester Address: ", owner.address);
+  describe("Share", function () {
+    it("share files to multiple addresses", async function () {
+      // upload private file
+      await library.PrivateUpload("Sam Book", ipfsLink, "My Personal Photo");
 
-//         const startingBalance = await myContract.balanceOf(owner.address);
-//         console.log("\t", " ⚖️ Starting balance: ", startingBalance.toNumber());
+      const addressList = [addr2.address, addr3.address];
+      const shared = await library.share(addressList, 1);
 
-//         console.log("\t", " 🔨 Minting...");
-//         const mintResult = await myContract.mintItem(
-//           owner.address,
-//           "QmfVMAmNM1kDEBYrC2TPzQDoCRFH6F5tE1e9Mr4FkkR5Xr"
-//         );
-//         console.log("\t", " 🏷  mint tx: ", mintResult.hash);
+      expect(shared.from).to.equal(owner.address);
+    });
 
-//         console.log("\t", " ⏳ Waiting for confirmation...");
-//         const txResult = await mintResult.wait(2);
-//         expect(txResult.status).to.equal(1);
+    it("Revert for address zero", async function () {
+      // upload private file
+      await library.PrivateUpload("Sam Book", ipfsLink, "My Personal Photo");
 
-//         console.log(
-//           "\t",
-//           " 🔎 Checking new balance: ",
-//           startingBalance.toNumber()
-//         );
-//         expect(await myContract.balanceOf(owner.address)).to.equal(
-//           startingBalance.add(1)
-//         );
-//       });
+      const addressList = ["0x", "0x"];
+      await expect(library.share(addressList, 1)).to.be.reverted;
+    });
+  });
 
-//       it("Should track tokens of owner by index", async function () {
-//         const [owner] = await ethers.getSigners();
-//         const startingBalance = await myContract.balanceOf(owner.address);
-//         const token = await myContract.tokenOfOwnerByIndex(
-//           owner.address,
-//           startingBalance.sub(1)
-//         );
-//         expect(token.toNumber()).to.greaterThan(0);
-//       });
-//     });
-//   });
-// });
+  describe("View Library", function () {
+    it("private view", async function () {
+      await library.PrivateUpload("Sam Book", ipfsLink, "My Personal Photo");
+      const ownerPrivateLib = await library.viewPrivateLib();
+      expect(ownerPrivateLib[0].Link).to.equal(ipfsLink);
+    });
+  });
+
+});
