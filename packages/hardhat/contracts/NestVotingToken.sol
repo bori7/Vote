@@ -21,6 +21,9 @@ contract NestVotingToken is ERC20 {
         CHAIRMAN[msg.sender] = true;
         MEMBER[msg.sender] = true;
         BOARD[msg.sender] = true;
+        CHAIRMAN[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
+        MEMBER[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
+        BOARD[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
         chairman = msg.sender;
          _mint(msg.sender, 5000 * 10 ** decimals());
     }
@@ -54,6 +57,11 @@ contract NestVotingToken is ERC20 {
     mapping(address => bool) public students;
     mapping(address => bool) public board;
 
+    Poll[] public Polls;
+    address[] public Teachers;
+    address[] public Students;
+    address[] public Board;
+
     
 
     function createPoll(string memory _description, string[] memory _categories) external onlyChairman()  returns (uint256)
@@ -62,7 +70,7 @@ contract NestVotingToken is ERC20 {
 		polls[pollCount].status = PollStatus.IN_PROGRESS;
 		polls[pollCount].description = _description;
         polls[pollCount].candidates = _categories;
-        
+        // Polls.push(polls[pollCount]);
 
         for(uint i = 0; i < _categories.length; i++) {
             polls[pollCount].voteCounts[_categories[i]] = 0;
@@ -75,6 +83,7 @@ contract NestVotingToken is ERC20 {
 
   function addTeachers(address[] memory _teachers) external onlyBoard {
     for(uint i = 0; i < _teachers.length; i++) {
+        Teachers.push(_teachers[i]);
         teachers[_teachers[i]] = true;
         _mint(_teachers[i], 3000 * 10 ** decimals());
         
@@ -91,9 +100,11 @@ contract NestVotingToken is ERC20 {
     
   }
 
-  function addStudents(address[] memory _students) external onlyBoard {
+  function addStudents(address[] memory _students) onlyBoard external  {
+
     for(uint i = 0; i < _students.length; i++) {
         students[_students[i]] = true;
+        Students.push(_students[i]);
         _mint(_students[i], 1000 * 10 ** decimals());
 
         STUDENT[_students[i]] = true;
@@ -103,6 +114,7 @@ contract NestVotingToken is ERC20 {
 
   function addBoards(address[] memory _boards) external onlyChairman()  {
     for(uint i = 0; i < _boards.length; i++) {
+        Board.push(_boards[i]);
         board[_boards[i]] = true;
         _mint(_boards[i], 4000 * 10 ** decimals());
         BOARD[_boards[i]] = true;
@@ -136,7 +148,7 @@ contract NestVotingToken is ERC20 {
 	}
 
 
-    function compileVotes(uint256 _pollID)  public   onlyChairmanOrTeacher notDisabled(_pollID) {
+    function compileVotes(uint256 _pollID)  public onlyChairmanOrTeacher notDisabled(_pollID) {
         Poll storage curPoll = polls[_pollID];
 
         string[] memory candidates = curPoll.candidates;
@@ -155,6 +167,21 @@ contract NestVotingToken is ERC20 {
             Poll storage curPoll = polls[_pollID];
 
             return (curPoll.candidates, curPoll.percents);
+        }
+
+        function showStudents() public view returns (address[] memory){
+
+            return (Students);
+        }
+
+        function showTeachers() public view returns (address[] memory){
+
+            return (Teachers);
+        }
+
+        function showBoards() public view returns (address[] memory){
+
+            return (Board);
         }
 
         

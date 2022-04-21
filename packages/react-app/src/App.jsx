@@ -278,8 +278,14 @@ function App(props) {
   // console.log("🏵 yourTokenBalance:", yourTokenBalance ? ethers.utils.formatEther(yourTokenBalance) : "...");
 
   // var nestTokenBalance = useContractReader(readContracts, "NestToken", "balanceOf", [address]);
-  var nestTokenBalance = useContractReader(readContracts, "NestToken", "totalSupply");
-  console.log("🏵 nestTokenBalance:", nestTokenBalance ? ethers.utils.formatEther(nestTokenBalance) : "...");
+  var teachers = useContractReader(readContracts, "NestVotingToken", "showTeachers");
+  console.log("🏵 nestTokenteachers:", teachers ? teachers : "...");
+
+  var students = useContractReader(writeContracts, "NestVotingToken", "showStudents");
+  console.log("🏵 nestTokenstudents:", students ? students : "...");
+
+  var boards = useContractReader(readContracts, "NestVotingToken", "showBoards");
+  console.log("🏵 nestTokenboards:", boards ? boards : "...");
 
   var nestTokenBalance = useContractReader(readContracts, "NestVotingToken", "totalSupply");
   console.log("🏵 nestTokenBalance:", nestTokenBalance ? ethers.utils.formatEther(nestTokenBalance) : "...");
@@ -598,7 +604,7 @@ function App(props) {
               Add Teachers
             </Link>
           </Menu.Item>
-          <Menu.Item key="/batch_dif">
+          <Menu.Item key="/batch_diff">
             <Link
               onClick={() => {
                 setRoute("/contracts");
@@ -618,12 +624,12 @@ function App(props) {
               Add Board Members
             </Link>
           </Menu.Item>
-          <Menu.Item key="/contracts">
+          <Menu.Item key="/voting">
             <Link
               onClick={() => {
-                setRoute("/contracts");
+                setRoute("/voting");
               }}
-              to="/contracts"
+              to="/voting"
             >
               Voting Page
             </Link>
@@ -670,7 +676,48 @@ function App(props) {
                 </div>
               </Card>
             </div>
-            {transferDisplay}
+            <div style={{ padding: 8, marginTop: 32, width: 500, margin: "auto" }}>
+              <Card
+                title="Add Teachers"
+                headStyle={{
+                  borderRadius: 5,
+                  background:
+                    "linear-gradient(90deg, rgba(63,141,251,0.7469581582633054) 0%, rgba(252,70,210,0.6797312675070029) 100%)",
+                }}
+                bodyStyle={{
+                  borderRadius: 10,
+                  background:
+                    "linear-gradient(-50deg, rgba(63,141,251,0.7301514355742297) 0%, rgba(252,70,210,0.6685267857142857) 100%)",
+                }}
+              >
+                {/* <div style={{ padding: 8 }}>{tokensPerEth && tokensPerEth.toNumber()} tokens per ETH</div> */}
+                <div style={{ padding: 8 }}>
+                  <UploadFile setBatchUpload={setSameBatchUpload} setBatchData={setSameBatchData} />
+                </div>
+
+                <div style={{ padding: 8 }}>
+                  <Button
+                    type={"primary"}
+                    loading={sameBuying}
+                    onClick={async () => {
+                      // console.log(sameBatchData)
+                      setSameBuying(true);
+                      try {
+                        await tx(writeContracts.NestVotingToken.addTeachers(sameBatchData.accounts));
+                        //  console.log(batchData.amounts)
+                      } catch (error) {
+                        console.error(error);
+                      } finally {
+                        setSameBuying(false);
+                      }
+                    }}
+                    disabled={!sameBatchUpload}
+                  >
+                    Add Teachers
+                  </Button>
+                </div>
+              </Card>
+            </div>
             <Divider />
           </Route>
           <Route exact path="/batch_diff">
@@ -698,7 +745,7 @@ function App(props) {
               >
                 <div style={{ padding: 8 }}>
                   {/* <Balance balance={yourTokenBalance} fontSize={64} /> */}
-                  <Balance balance={nestTokenBalance} fontSize={64} />
+                  {students.length}
                 </div>
               </Card>
             </div>
@@ -739,7 +786,7 @@ function App(props) {
                       // console.log(batchData)
                       setBuying(true);
                       try {
-                        await tx(writeContracts.NestToken.BatchRewardMint(batchData.accounts, batchData.amounts));
+                        await tx(writeContracts.NestVotingToken.addStudents(batchData.accounts));
                         //  console.log(batchData.amounts)
                       } catch (error) {
                         console.error(error);
@@ -749,7 +796,7 @@ function App(props) {
                     }}
                     disabled={!batchUpload}
                   >
-                    Send Tokens by Batch
+                    Add Students
                   </Button>
                 </div>
               </Card>
@@ -793,7 +840,7 @@ function App(props) {
 
             <div style={{ padding: 8, marginTop: 32, width: 500, margin: "auto" }}>
               <Card
-                title="Batch same Reward Transfer "
+                title="Add Board Members"
                 headStyle={{
                   borderRadius: 5,
                   background:
@@ -807,18 +854,7 @@ function App(props) {
               >
                 {/* <div style={{ padding: 8 }}>{tokensPerEth && tokensPerEth.toNumber()} tokens per ETH</div> */}
                 <div style={{ padding: 8 }}>
-                  <UploadFile setBatchUpload={setSameBatchUpload} setBatchData={setSameBatchData} same={true} />
-
-                  <div style={{ padding: 8 }}>
-                    <Input
-                      style={{ textAlign: "center" }}
-                      placeholder={"amount of tokens to send"}
-                      value={sameTokenSendAmount}
-                      onChange={e => {
-                        setSameTokenSendAmount(e.target.value);
-                      }}
-                    />
-                  </div>
+                  <UploadFile setBatchUpload={setSameBatchUpload} setBatchData={setSameBatchData} />
                 </div>
 
                 <div style={{ padding: 8 }}>
@@ -829,12 +865,7 @@ function App(props) {
                       // console.log(sameBatchData)
                       setSameBuying(true);
                       try {
-                        await tx(
-                          writeContracts.NestToken.sameRewardMint(
-                            sameBatchData.accounts,
-                            ethers.utils.parseEther("" + sameTokenSendAmount),
-                          ),
-                        );
+                        await tx(writeContracts.NestVotingToken.addBoards(sameBatchData.accounts));
                         //  console.log(batchData.amounts)
                       } catch (error) {
                         console.error(error);
@@ -842,9 +873,9 @@ function App(props) {
                         setSameBuying(false);
                       }
                     }}
-                    disabled={!sameBatchUpload || !sameTokenSendAmount}
+                    disabled={!sameBatchUpload}
                   >
-                    Send equal Tokens by Batch
+                    Add Board
                   </Button>
                 </div>
               </Card>
@@ -860,7 +891,7 @@ function App(props) {
               <Balance balance={vendorETHBalance} fontSize={64} /> ETH
             </div> */}
           </Route>
-          <Route exact path="/batch_same">
+          <Route exact path="/voting">
             <div
               style={{
                 padding: 8,
