@@ -672,7 +672,9 @@ function App(props) {
               >
                 <div style={{ padding: 8 }}>
                   {/* <Balance balance={yourTokenBalance} fontSize={64} /> */}
-                  <Balance balance={nestTokenBalance} fontSize={64} />
+                  {/* <Balance balance={nestTokenBalance} fontSize={64} />
+                   */}
+                  {teachers.length}
                 </div>
               </Card>
             </div>
@@ -832,7 +834,8 @@ function App(props) {
               >
                 <div style={{ padding: 8 }}>
                   {/* <Balance balance={yourTokenBalance} fontSize={64} /> */}
-                  <Balance balance={nestTokenBalance} fontSize={64} />
+                  {/* <Balance balance={nestTokenBalance} fontSize={64} /> */}
+                  {boards.length}
                 </div>
               </Card>
             </div>
