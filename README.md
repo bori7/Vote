@@ -27,3 +27,4 @@ Have your local chain running with:
 `yarn chain` (hardhat backend)
 
 `yarn test` (to run test)
+# Vote
