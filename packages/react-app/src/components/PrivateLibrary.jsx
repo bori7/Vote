@@ -12,6 +12,8 @@ export default function PrivateLibrary({ writeContracts, tx, privateLibrary, mai
     setSearchEvents(privateLibrary.filter(item => item.name.includes(val)));
   };
 
+  // useEffect(() => {}, [val, searchEvents]);
+
   return (
     <div style={{ backgroundColor: "#636C78" }}>
       <section id="#Library" data-w-id="9a8c8c5e-18d4-aeb9-bc37-bac71fe0745b" className="section mod--hero ">
