@@ -50,7 +50,6 @@ export default function Account({
   loadWeb3Modal,
   logoutOfWeb3Modal,
   blockExplorer,
-  networkDisplay,
 }) {
   const modalButtons = [];
   if (web3Modal) {
@@ -107,10 +106,8 @@ export default function Account({
 
   return (
     <div>
-      {/* {display} */}
-
+      {display}
       {modalButtons}
-      {networkDisplay}
     </div>
   );
 }

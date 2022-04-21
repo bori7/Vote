@@ -5,8 +5,13 @@ import React from "react";
 
 export default function Header() {
   return (
-    <a href="https://github.com/austintgriffith/scaffold-eth" target="_blank" rel="noopener noreferrer">
-      <PageHeader title="🏗 scaffold-eth" subTitle="🖼 NFT example" style={{ cursor: "pointer" }} />
+    <a href="/" /*target="_blank" rel="noopener noreferrer"*/
+    >
+      <PageHeader
+        title="💎 Team Call-Byte.eth"
+        subTitle="a decentralized team management platform for NestCoin"
+        style={{ cursor: "pointer" }}
+      />
     </a>
   );
 }
