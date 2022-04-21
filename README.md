@@ -28,3 +28,4 @@ Have your local chain running with:
 
 `yarn test` (to run test)
 # Vote
+
