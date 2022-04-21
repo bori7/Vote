@@ -1,6 +1,21 @@
 import Portis from "@portis/web3";
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { Alert, Button, Card, Col, Divider, Input, List, Menu, Row, Collapse } from "antd";
+import {
+  Alert,
+  Button,
+  Card,
+  Col,
+  Divider,
+  Input,
+  List,
+  Menu,
+  Row,
+  Collapse,
+  Radio,
+  Space,
+  Form,
+  Checkbox,
+} from "antd";
 import "antd/dist/antd.css";
 import Authereum from "authereum";
 import {
@@ -278,19 +293,23 @@ function App(props) {
   // console.log("🏵 yourTokenBalance:", yourTokenBalance ? ethers.utils.formatEther(yourTokenBalance) : "...");
 
   // var nestTokenBalance = useContractReader(readContracts, "NestToken", "balanceOf", [address]);
-  var teachers = useContractReader(readContracts, "NestVotingToken", "showTeachers");
+  var teachers = useContractReader(writeContracts, "NestVotingToken", "showTeachers");
   console.log("🏵 nestTokenteachers:", teachers ? teachers : "...");
 
   var students = useContractReader(writeContracts, "NestVotingToken", "showStudents");
   console.log("🏵 nestTokenstudents:", students ? students : "...");
 
-  var boards = useContractReader(readContracts, "NestVotingToken", "showBoards");
+  var boards = useContractReader(writeContracts, "NestVotingToken", "showBoards");
   console.log("🏵 nestTokenboards:", boards ? boards : "...");
 
-  var nestTokenBalance = useContractReader(readContracts, "NestVotingToken", "totalSupply");
-  console.log("🏵 nestTokenBalance:", nestTokenBalance ? ethers.utils.formatEther(nestTokenBalance) : "...");
-  // const tokensPerEth = useContractReader(readContracts, "Vendor", "tokensPerEth");
-  // console.log("🏦 tokensPerEth:", tokensPerEth ? tokensPerEth.toString() : "...");
+  var boards = useContractReader(writeContracts, "NestVotingToken", "showBoards");
+  console.log("🏵 nestTokenboards:", boards ? boards : "...");
+
+  var pollsNum = useContractReader(writeContracts, "NestVotingToken", "showPolls");
+  console.log("🏵 nestTokenBalance:", pollsNum, "...");
+
+  // const pollcurr = useContractReader(writeContracts, "NestVotingToken", "showPoll", [pollId]);
+  // console.log("🏦 tokensPerEth:", pollcurr);
 
   // const complete = useContractReader(readContracts,"ExampleExternalContract", "completed")
   // console.log("✅ complete:",complete)
@@ -514,6 +533,14 @@ function App(props) {
 
   const [buying, setBuying] = useState();
 
+  const [name, setName] = useState("");
+  const [pollId, setPollId] = useState(1);
+  const [description, setDescription] = useState("");
+
+  const [categories, setCategories] = useState("");
+
+  const [voteFor, setVoteFor] = useState();
+
   const [batchUpload, setBatchUpload] = useState(false);
   const [batchData, setBatchData] = useState();
 
@@ -521,6 +548,12 @@ function App(props) {
   const [sameBatchData, setSameBatchData] = useState();
   const [sameBuying, setSameBuying] = useState();
   const [sameTokenSendAmount, setSameTokenSendAmount] = useState();
+
+  const pollcurr = useContractReader(writeContracts, "NestVotingToken", "showPoll", [pollId]);
+  console.log("🏦 tokensPerEth:", pollcurr);
+
+  var totvotes = useContractReader(writeContracts, "NestVotingToken", "showVote", [pollId]);
+  console.log("🏵 nestTokenBalance:", totvotes, "...");
 
   let transferDisplay = "";
   transferDisplay = (
@@ -674,7 +707,7 @@ function App(props) {
                   {/* <Balance balance={yourTokenBalance} fontSize={64} /> */}
                   {/* <Balance balance={nestTokenBalance} fontSize={64} />
                    */}
-                  {teachers.length}
+                  {teachers?.length}
                 </div>
               </Card>
             </div>
@@ -747,7 +780,7 @@ function App(props) {
               >
                 <div style={{ padding: 8 }}>
                   {/* <Balance balance={yourTokenBalance} fontSize={64} /> */}
-                  {students.length}
+                  {students?.length}
                 </div>
               </Card>
             </div>
@@ -835,7 +868,7 @@ function App(props) {
                 <div style={{ padding: 8 }}>
                   {/* <Balance balance={yourTokenBalance} fontSize={64} /> */}
                   {/* <Balance balance={nestTokenBalance} fontSize={64} /> */}
-                  {boards.length}
+                  {boards?.length}
                 </div>
               </Card>
             </div>
@@ -919,11 +952,133 @@ function App(props) {
               >
                 <div style={{ padding: 8 }}>
                   {/* <Balance balance={yourTokenBalance} fontSize={64} /> */}
-                  <Balance balance={nestTokenBalance} fontSize={64} />
+                  {/* <Balance balance={nestTokenBalance} fontSize={64} /> */}
+                  {totvotes ? totvotes : null}
                 </div>
               </Card>
             </div>
             <Divider />
+            <div style={{ width: 650, margin: "auto", marginTop: 64 }}>
+              <div style={{ fontSize: 30, textShadow: "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black" }}>
+                Nest Token Events:
+              </div>
+              <br />
+
+              <br />
+
+              <Collapse defaultActiveKey={["2"]} onChange={() => console.log("k")}>
+                <Panel header={<p>Create Poll</p>} key="2">
+                  <Card
+                    headStyle={{
+                      borderRadius: 5,
+                      background:
+                        "linear-gradient(-90deg, rgba(162,34,195,0.5760898109243697) 7%, rgba(45,205,253,0.5312718837535014) 88%)",
+                    }}
+                    bodyStyle={{
+                      borderRadius: 10,
+                      background:
+                        "linear-gradient(90deg, rgba(140,34,195,0.5760898109243697) 7%, rgba(45,159,253,0.5312718837535014) 88%)",
+                    }}
+                  >
+                    <Form
+                      name="basic"
+                      labelCol={{
+                        span: 8,
+                      }}
+                      wrapperCol={{
+                        span: 16,
+                      }}
+                      initialValues={{
+                        remember: true,
+                      }}
+                      onFinish={async () => {
+                        try {
+                          await tx(writeContracts.NestVotingToken.createPoll(name, description, categories.split(",")));
+                          //  console.log(batchData.amounts)
+                        } catch (error) {
+                          console.error(error);
+                        } finally {
+                          setBuying(false);
+                        }
+                      }}
+                      // onFinishFailed={}
+                      autoComplete="off"
+                    >
+                      <Form.Item
+                        label="name"
+                        name="name"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input your name!",
+                          },
+                        ]}
+                      >
+                        <Input
+                          style={{ textAlign: "center" }}
+                          placeholder={"Name"}
+                          value={name}
+                          onChange={e => {
+                            setName(e.target.value);
+                          }}
+                        />
+                      </Form.Item>
+
+                      <Form.Item
+                        label="description"
+                        name="description"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please input your description!",
+                          },
+                        ]}
+                      >
+                        <Input
+                          style={{ textAlign: "center" }}
+                          placeholder={"description"}
+                          value={description}
+                          onChange={e => {
+                            setDescription(e.target.value);
+                          }}
+                        />
+                      </Form.Item>
+
+                      <Form.Item
+                        label="candidates"
+                        name="candidates"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please put a list of candidates!",
+                          },
+                        ]}
+                      >
+                        <Input
+                          style={{ textAlign: "center" }}
+                          placeholder={"candidates"}
+                          value={categories}
+                          onChange={e => {
+                            setCategories(e.target.value);
+                          }}
+                        />
+                      </Form.Item>
+
+                      <Form.Item
+                        wrapperCol={{
+                          offset: 8,
+                          span: 16,
+                        }}
+                      >
+                        <Button type="primary" htmlType="submit">
+                          Submit
+                        </Button>
+                      </Form.Item>
+                    </Form>
+                  </Card>
+                </Panel>
+              </Collapse>
+            </div>
 
             <div style={{ padding: 8, marginTop: 32, width: 500, margin: "auto" }}>
               <Card
@@ -939,49 +1094,55 @@ function App(props) {
                     "linear-gradient(-50deg, rgba(63,141,251,0.7301514355742297) 0%, rgba(252,70,210,0.6685267857142857) 100%)",
                 }}
               >
-                {/* <div style={{ padding: 8 }}>{tokensPerEth && tokensPerEth.toNumber()} tokens per ETH</div> */}
-                <div style={{ padding: 8 }}>
-                  <UploadFile setBatchUpload={setSameBatchUpload} setBatchData={setSameBatchData} same={true} />
-
-                  <div style={{ padding: 8 }}>
-                    <Input
-                      style={{ textAlign: "center" }}
-                      placeholder={"amount of tokens to send"}
-                      value={sameTokenSendAmount}
-                      onChange={e => {
-                        setSameTokenSendAmount(e.target.value);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div style={{ padding: 8 }}>
-                  <Button
-                    type={"primary"}
-                    loading={sameBuying}
-                    onClick={async () => {
-                      // console.log(sameBatchData)
-                      setSameBuying(true);
-                      try {
-                        await tx(
-                          writeContracts.NestToken.sameRewardMint(
-                            sameBatchData.accounts,
-                            ethers.utils.parseEther("" + sameTokenSendAmount),
-                          ),
-                        );
-                        //  console.log(batchData.amounts)
-                      } catch (error) {
-                        console.error(error);
-                      } finally {
-                        setSameBuying(false);
-                      }
-                    }}
-                    disabled={!sameBatchUpload || !sameTokenSendAmount}
-                  >
-                    Send equal Tokens by Batch
-                  </Button>
-                </div>
+                {pollcurr ? (
+                  <>
+                    <p>
+                      {"Name"}: {pollcurr[0]}
+                    </p>
+                    <p>
+                      {"Description"}: {pollcurr[1]}
+                    </p>
+                  </>
+                ) : null}
+                <Radio.Group
+                  onChange={e => {
+                    setVoteFor(e.target.value);
+                  }}
+                  value={voteFor}
+                >
+                  <Space direction="vertical">
+                    {pollcurr
+                      ? pollcurr[3]?.map((candidate, index) => (
+                          <>
+                            <Radio key={index} value={candidate}>
+                              {candidate}
+                            </Radio>
+                          </>
+                        ))
+                      : null}
+                  </Space>
+                </Radio.Group>
               </Card>
+
+              <Button
+                type={"primary"}
+                // loading={sameBuying}
+                onClick={async () => {
+                  // console.log(sameBatchData)
+                  // setSameBuying(true);
+                  try {
+                    await tx(writeContracts.NestVotingToken.castVote(pollId, voteFor));
+                    //  console.log(batchData.amounts)
+                  } catch (error) {
+                    console.error(error);
+                  } finally {
+                    // setSameBuying(false);
+                  }
+                }}
+                disabled={!voteFor}
+              >
+                Vote
+              </Button>
             </div>
 
             {/* <div style={{ padding: 8, marginTop: 32 }}>
@@ -1023,23 +1184,6 @@ function App(props) {
           blockExplorer={blockExplorer}
         />
         {faucetHint}
-      </div>
-
-      <div style={{ marginTop: 32 }}>
-        <div style={{ marginLeft: 32, opacity: 0.5 }}>
-          {/* Created by <Address value={"Your...address"} ensProvider={mainnetProvider} fontSize={16} /> */}
-          <a
-            target="_blank"
-            href="https://docs.google.com/document/d/1lzL98EAJhTSzXEstB5IcP1mj5wEMmDVZIq97Vm_2oec/edit"
-          >
-            UI Guide
-          </a>
-        </div>
-
-        <div style={{ opacity: 0.5 }}>
-          {/* Created by <Address value={"Your...address"} ensProvider={mainnetProvider} fontSize={16} /> */}
-          Team Call-Byte ©️ {new Date().getFullYear()}
-        </div>
       </div>
     </div>
   );

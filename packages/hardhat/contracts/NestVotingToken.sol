@@ -37,12 +37,14 @@ contract NestVotingToken is ERC20 {
 
     struct Poll
 	{
+        string name;
 		string description;
 		PollStatus status;
         mapping(string => uint256) voteCounts;
 		mapping(address => Voter) voterInfo;
         string[] candidates;
         uint256[] percents; 
+        uint256 vote ;
 	}
 
 	struct Voter
@@ -56,6 +58,7 @@ contract NestVotingToken is ERC20 {
     mapping(address => bool) public teachers;
     mapping(address => bool) public students;
     mapping(address => bool) public board;
+    uint256[] public pollNums;
 
     Poll[] public Polls;
     address[] public Teachers;
@@ -64,13 +67,14 @@ contract NestVotingToken is ERC20 {
 
     
 
-    function createPoll(string memory _description, string[] memory _categories) external onlyChairman()  returns (uint256)
+    function createPoll(string memory _name, string memory _description, string[] memory _categories) external onlyChairman()  returns (uint256)
 	{
 		pollCount++;
+        polls[pollCount].name = _name;
 		polls[pollCount].status = PollStatus.IN_PROGRESS;
 		polls[pollCount].description = _description;
         polls[pollCount].candidates = _categories;
-        // Polls.push(polls[pollCount]);
+        pollNums.push(pollCount);
 
         for(uint i = 0; i < _categories.length; i++) {
             polls[pollCount].voteCounts[_categories[i]] = 0;
@@ -143,6 +147,7 @@ contract NestVotingToken is ERC20 {
 		});
 
         curPoll.voteCounts[_vote] += 1;
+        curPoll.vote+=1;
 
 		emit VoteCasted(msg.sender, _pollID, _vote);
 	}
@@ -184,7 +189,24 @@ contract NestVotingToken is ERC20 {
             return (Board);
         }
 
-        
+       
+
+        function showPolls() public view returns (uint256[] memory){
+
+            return (pollNums);
+        }
+
+        function showVote(uint256 _pollID) public view returns (uint256){
+Poll storage curPoll = polls[_pollID];
+            return (curPoll.vote);
+        }
+
+        function showPoll(uint256 _pollID) public view returns (
+            string memory, string memory, PollStatus status,string[] memory){
+
+                Poll storage curPoll = polls[_pollID];
+            return (curPoll.name,curPoll.description,curPoll.status,curPoll.candidates);
+        }
 
         function diablePoll(uint256 _pollID) public onlyChairman()  {
 
