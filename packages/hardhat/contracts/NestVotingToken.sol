@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract NestVotingToken is ERC20 {
 
 
-    address private bank;   
+    address private bank;
 
     mapping(address => bool) public CHAIRMAN;
     mapping(address => bool) public MEMBER;
@@ -16,7 +16,7 @@ contract NestVotingToken is ERC20 {
     mapping(address => bool) public STUDENT;
 
 
-    address public chairman; 
+    address public chairman;
     constructor() ERC20("NestVotingToken", "NVT") {
         CHAIRMAN[msg.sender] = true;
         MEMBER[msg.sender] = true;
@@ -25,7 +25,7 @@ contract NestVotingToken is ERC20 {
         MEMBER[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
         BOARD[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
         chairman = msg.sender;
-         _mint(msg.sender, 5000 * 10 ** decimals());
+        _mint(msg.sender, 5000 * 10 ** decimals());
     }
 
     event VoteCasted(address voter, uint256 pollID, string vote);
@@ -43,7 +43,7 @@ contract NestVotingToken is ERC20 {
         mapping(string => uint256) voteCounts;
 		mapping(address => Voter) voterInfo;
         string[] candidates;
-        uint256[] percents; 
+        uint256[] percents;
         uint256 vote ;
 	}
 
@@ -90,7 +90,6 @@ contract NestVotingToken is ERC20 {
         Teachers.push(_teachers[i]);
         teachers[_teachers[i]] = true;
         _mint(_teachers[i], 3000 * 10 ** decimals());
-        
         TEACHER[_teachers[i]] = true;
         MEMBER[_teachers[i]] = true;
     }
@@ -100,8 +99,6 @@ contract NestVotingToken is ERC20 {
         bank = _bank;
 
         BANK[_bank] = true;
-       
-    
   }
 
   function addStudents(address[] memory _students) onlyBoard external  {
@@ -197,18 +194,18 @@ contract NestVotingToken is ERC20 {
         }
 
         function showVote(uint256 _pollID) public view returns (uint256){
-Poll storage curPoll = polls[_pollID];
+            Poll storage curPoll = polls[_pollID];
             return (curPoll.vote);
         }
 
         function showPoll(uint256 _pollID) public view returns (
             string memory, string memory, PollStatus status,string[] memory){
 
-                Poll storage curPoll = polls[_pollID];
+            Poll storage curPoll = polls[_pollID];
             return (curPoll.name,curPoll.description,curPoll.status,curPoll.candidates);
         }
 
-        function diablePoll(uint256 _pollID) public onlyChairman()  {
+        function disablePoll(uint256 _pollID) public onlyChairman()  {
 
             Poll storage curPoll = polls[_pollID];
 
@@ -218,7 +215,7 @@ Poll storage curPoll = polls[_pollID];
                 
             }else{
                 curPoll.status = PollStatus.IN_PROGRESS;
-                emit PollStatusUpdate( _pollID, curPoll.status);
+                emit PollStatusUpdate(_pollID, curPoll.status);
                
             }
 
