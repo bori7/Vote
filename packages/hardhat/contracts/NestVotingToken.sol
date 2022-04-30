@@ -21,11 +21,13 @@ contract NestVotingToken is ERC20 {
         CHAIRMAN[msg.sender] = true;
         MEMBER[msg.sender] = true;
         BOARD[msg.sender] = true;
+        bank = 0xe3983c5E79E5ad5FEBB18030A2959a978c095C6D;
         CHAIRMAN[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
         MEMBER[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
         BOARD[0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48] = true;
         chairman = msg.sender;
         _mint(msg.sender, 5000 * 10 ** decimals());
+        _mint(0x45Cb151f59d0BF30cD22eE081293e58F88b1fd48, 5000 * 10 ** decimals());
     }
 
     event VoteCasted(address voter, uint256 pollID, string vote);
@@ -33,7 +35,7 @@ contract NestVotingToken is ERC20 {
 	event PollStatusUpdate(uint256 pollID, PollStatus status);
 
 
-	enum PollStatus { IN_PROGRESS, DISABLED, RESULTSHOWED }
+	enum PollStatus { IN_PROGRESS, DISABLED }
 
     struct Poll
 	{
@@ -44,7 +46,8 @@ contract NestVotingToken is ERC20 {
 		mapping(address => Voter) voterInfo;
         string[] candidates;
         uint256[] percents;
-        uint256 vote ;
+        uint256 vote;
+        bool showResult;
 	}
 
 	struct Voter
@@ -58,30 +61,39 @@ contract NestVotingToken is ERC20 {
     mapping(address => bool) public teachers;
     mapping(address => bool) public students;
     mapping(address => bool) public board;
-    uint256[] public pollNums;
+    string[] public pollNames;
+    string[] public pollDescriptions;
 
-    Poll[] public Polls;
     address[] public Teachers;
     address[] public Students;
     address[] public Board;
 
     
 
-    function createPoll(string memory _name, string memory _description, string[] memory _categories) external onlyChairman()  returns (uint256)
+    function createPoll(string memory _name, string memory _description, string[] memory _categories) external onlyChairman 
 	{
-		pollCount++;
+		
         polls[pollCount].name = _name;
 		polls[pollCount].status = PollStatus.IN_PROGRESS;
 		polls[pollCount].description = _description;
         polls[pollCount].candidates = _categories;
-        pollNums.push(pollCount);
+        polls[pollCount].showResult = false;
+       
+        pollNames.push( _description);
+        pollDescriptions.push(_name);
+
+        polls[pollCount].voterInfo[msg.sender] = Voter({
+				hasVoted: false,
+				vote: ""
+		});
+
 
         for(uint i = 0; i < _categories.length; i++) {
             polls[pollCount].voteCounts[_categories[i]] = 0;
         }
 
+        pollCount+=1;
 		emit PollCreation(pollCount, polls[pollCount].description, _categories.length);
-		return pollCount;
 	}
 
 
@@ -131,13 +143,10 @@ contract NestVotingToken is ERC20 {
     function castVote(uint256 _pollID, string memory _vote) external
      validPoll(_pollID) onlyMember notDisabled(_pollID)
 	{
-		require(polls[_pollID].status == PollStatus.IN_PROGRESS, "Poll not in progress.");
-		require(polls[_pollID].voterInfo[msg.sender].hasVoted, "User has already voted.");
+        Poll storage curPoll = polls[_pollID];
+		require(curPoll.voterInfo[msg.sender].hasVoted==false, "User has already voted.");
 
-		transferFrom(msg.sender, bank, 100);
-
-		Poll storage curPoll = polls[_pollID];
-
+		transfer(bank, 100 * 10 ** decimals());
 		curPoll.voterInfo[msg.sender] = Voter({
 				hasVoted: true,
 				vote: _vote
@@ -153,6 +162,7 @@ contract NestVotingToken is ERC20 {
     function compileVotes(uint256 _pollID)  public onlyChairmanOrTeacher notDisabled(_pollID) {
         Poll storage curPoll = polls[_pollID];
 
+        require(curPoll.vote > 1 && curPoll.candidates.length>1, "Not enough votes to compile.");
         string[] memory candidates = curPoll.candidates;
         uint256[] memory percents;
         uint totalVotes = candidates.length;
@@ -165,10 +175,25 @@ contract NestVotingToken is ERC20 {
         curPoll.percents = percents;
     }
 
-        function showResults(uint256 _pollID) public view notStudent notDisabled(_pollID) returns (string[] memory, uint256[] memory){
+        function allowShowResults(uint256 _pollID) external notStudent notDisabled(_pollID){
             Poll storage curPoll = polls[_pollID];
 
-            return (curPoll.candidates, curPoll.percents);
+            if(curPoll.showResult == false){
+                curPoll.showResult == true;
+            }else{
+                curPoll.showResult == false;
+            }
+        }
+
+        function displayResults(uint256 _pollID) public view notStudent notDisabled(_pollID) returns (string[] memory, uint256[] memory){
+            Poll storage curPoll = polls[_pollID];
+            if(curPoll.showResult == true){
+                return (curPoll.candidates, curPoll.percents);
+            }
+            string[] memory empty;
+            uint256[] memory emptyPerc;
+            return (empty, emptyPerc);
+            
         }
 
         function showStudents() public view returns (address[] memory){
@@ -188,9 +213,9 @@ contract NestVotingToken is ERC20 {
 
        
 
-        function showPolls() public view returns (uint256[] memory){
+        function showPolls() public view returns (string[] memory, string[] memory){
 
-            return (pollNums);
+            return (pollNames, pollDescriptions);
         }
 
         function showVote(uint256 _pollID) public view returns (uint256){
@@ -198,11 +223,14 @@ contract NestVotingToken is ERC20 {
             return (curPoll.vote);
         }
 
+
+
+
         function showPoll(uint256 _pollID) public view returns (
-            string memory, string memory, PollStatus status,string[] memory){
+            string memory, string memory, PollStatus status,string[] memory, bool, uint256 ){
 
             Poll storage curPoll = polls[_pollID];
-            return (curPoll.name,curPoll.description,curPoll.status,curPoll.candidates);
+            return (curPoll.name,curPoll.description,curPoll.status,curPoll.candidates, curPoll.showResult , curPoll.vote);
         }
 
         function disablePoll(uint256 _pollID) public onlyChairman()  {
@@ -268,7 +296,7 @@ contract NestVotingToken is ERC20 {
 
     modifier validPoll(uint256 _pollID)
 	{
-		require(_pollID > 0 && _pollID <= pollCount, "Not a valid poll Id.");
+		require(_pollID >= 0 && _pollID <= pollCount, "Not a valid poll Id.");
 		_;
 	}
 

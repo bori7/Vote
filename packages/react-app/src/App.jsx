@@ -265,8 +265,13 @@ function App(props) {
   // const vendorTokenBalance = useContractReader(readContracts, "YourToken", "balanceOf", [vendorAddress]);
   // console.log("🏵 vendorTokenBalance:", vendorTokenBalance ? ethers.utils.formatEther(vendorTokenBalance) : "...");
 
-  // const yourTokenBalance = useContractReader(readContracts, "YourToken", "balanceOf", [address]);
-  // console.log("🏵 yourTokenBalance:", yourTokenBalance ? ethers.utils.formatEther(yourTokenBalance) : "...");
+  const voteCoinBalance = useContractReader(readContracts, "NestVotingToken", "balanceOf", [address]);
+  console.log("🏵 voteCoinBalance:", voteCoinBalance ? ethers.utils.formatEther(voteCoinBalance) : "...");
+
+  const bankCoinBalance = useContractReader(readContracts, "NestVotingToken", "balanceOf", [
+    "0xe3983c5E79E5ad5FEBB18030A2959a978c095C6D",
+  ]);
+  console.log("🏵 bankCoinBalance:", bankCoinBalance ? ethers.utils.formatEther(bankCoinBalance) : "...");
 
   // var nestTokenBalance = useContractReader(readContracts, "NestToken", "balanceOf", [address]);
   var teachers = useContractReader(writeContracts, "NestVotingToken", "showTeachers");
@@ -358,11 +363,7 @@ function App(props) {
 
   // const [buying, setBuying] = useState();
 
-  const [name, setName] = useState("");
-  const [pollId, setPollId] = useState(1);
-  const [description, setDescription] = useState("");
-
-  const [categories, setCategories] = useState("");
+  const [pollId, setPollId] = useState(0);
 
   const [voteFor, setVoteFor] = useState();
 
@@ -451,10 +452,45 @@ function App(props) {
               <Routes>
                 <Route
                   path="/"
-                  element={<Home noTeachers={teachers} noStudents={students} noBoards={boards} noPolls={pollsNum} />}
+                  element={
+                    <Home
+                      noTeachers={teachers}
+                      noStudents={students}
+                      noBoards={boards}
+                      noPolls={pollsNum}
+                      voteCoinBalance={voteCoinBalance ? ethers.utils.formatEther(voteCoinBalance) : 0}
+                      bankCoinBalance={bankCoinBalance ? ethers.utils.formatEther(bankCoinBalance) : 0}
+                    />
+                  }
                 />
-                <Route path="/stakeholders" element={<Stakeholders tx={tx} writeContracts={writeContracts} />} />
-                <Route path="elections" element={<Election />} />
+                <Route
+                  path="/stakeholders"
+                  element={
+                    <Stakeholders
+                      tx={tx}
+                      writeContracts={writeContracts}
+                      noTeachers={teachers}
+                      noStudents={students}
+                      noBoards={boards}
+                      mainnetProvider={mainnetProvider}
+                      blockExplorer={blockExplorer}
+                    />
+                  }
+                />
+                <Route
+                  path="elections"
+                  element={
+                    <Election
+                      noPolls={pollsNum}
+                      pollcurr={pollcurr}
+                      totvotes={totvotes}
+                      tx={tx}
+                      writeContracts={writeContracts}
+                      pollId={pollId}
+                      setPollId={setPollId}
+                    />
+                  }
+                />
               </Routes>
             </div>
             <footer className="dark:bg-slate-900 flex py-2 justify-center align-middle border-t">

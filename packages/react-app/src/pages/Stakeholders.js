@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { UploadComp } from "../components";
 import "antd/dist/antd.css";
 
-const Stakeholders = ({ tx, writeContracts }) => {
+const Stakeholders = ({ tx, writeContracts, noTeachers, noStudents, noBoards, mainnetProvider, blockExplorer }) => {
   const [tab, setTab] = useState(1);
 
   const [teacherUpload, setTeacherUpload] = useState(false);
@@ -71,6 +71,9 @@ const Stakeholders = ({ tx, writeContracts }) => {
           title={"Add Teachers"}
           tx={tx}
           func={writeContracts.NestVotingToken?.addTeachers}
+          data={noTeachers}
+          mainnetProvider
+          blockExplorer
         />
       )}
       {tab == 2 && (
@@ -84,6 +87,9 @@ const Stakeholders = ({ tx, writeContracts }) => {
           title={"Add Board Members"}
           tx={tx}
           func={writeContracts.NestVotingToken?.addBoards}
+          data={noBoards}
+          mainnetProvider
+          blockExplorer
         />
       )}
       {tab == 3 && (
@@ -97,6 +103,9 @@ const Stakeholders = ({ tx, writeContracts }) => {
           title={"Add Students"}
           tx={tx}
           func={writeContracts.NestVotingToken?.addStudents}
+          data={noStudents}
+          mainnetProvider
+          blockExplorer
         />
       )}
     </div>

@@ -19,3 +19,4 @@ export { default as Wallet } from "./Wallet";
 export { default as L2Bridge } from "./L2Bridge";
 export { default as UploadFile } from "./UploadFile";
 export { default as UploadComp } from "./UploadComp";
+export { default as CreateForm } from "./CreateForm";
