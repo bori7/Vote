@@ -1,8 +1,8 @@
 ###  📦 install 📚
 
 ```bash
-git clone https://github.com/Epic-Byte/NestCoinFullStack
-cd NestCoinFullStack
+git clone https://github.com/Team-T-stage3/Vote.git
+cd Vote
 yarn install
 ```
 
