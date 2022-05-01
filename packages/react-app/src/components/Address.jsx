@@ -37,7 +37,7 @@ const blockExplorerLink = (address, blockExplorer) =>
 export default function Address(props) {
   const address = props.value || props.address;
 
-  console.log(typeof address);
+  // console.log(typeof address);
   const ens = useLookupAddress(props.ensProvider, address);
 
   // const { currentTheme } = useThemeSwitcher();

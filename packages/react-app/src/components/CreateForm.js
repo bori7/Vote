@@ -1,20 +1,22 @@
 import { Form, Input, Button } from "antd";
 import { Select } from "antd";
 import React, { useState } from "react";
-
-// const { Option } = Select;
+import "antd/dist/antd.css";
 
 const CreateForm = ({ name, description, categories, setName, setDescription, setCategories, tx, writeContracts }) => {
-  //   const onFinishFailed = errorInfo => {
-  //     console.log("Failed:", errorInfo);
-  //   };
-
-  const children = [];
+  const onFinishFailed = errorInfo => {
+    console.log("Failed:", errorInfo);
+  };
+  // const { Option } = Select;
+  // const children = [];
+  // for (let i = 10; i < 20; i++) {
+  //   children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+  // }
 
   const [load, setLoad] = useState(false);
 
   function handleChange(value) {
-    console.log(`selected ${value}`);
+    // console.log(`selected ${value}`);
     // console.log(typeof value);
     // typeof value === "string" ? setCategories(value) : setCategories(value.join(","));
     setCategories(value);
@@ -32,7 +34,7 @@ const CreateForm = ({ name, description, categories, setName, setDescription, se
       initialValues={{
         remember: true,
       }}
-      //   onFinishFailed={onFinishFailed}
+      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
@@ -77,8 +79,8 @@ const CreateForm = ({ name, description, categories, setName, setDescription, se
           },
         ]}
       >
-        <Select mode="tags" style={{ width: "100%" }} placeholder="Tags Mode" onChange={handleChange}>
-          {children}
+        <Select mode="tags" style={{ width: "100%" }} placeholder="Add candidates as Tags " onChange={handleChange}>
+          {/* {children} */}
         </Select>
       </Form.Item>
 
@@ -95,7 +97,7 @@ const CreateForm = ({ name, description, categories, setName, setDescription, se
           onClick={async () => {
             try {
               setLoad(true);
-              console.log(name, description, categories);
+              // console.log(name, description, categories);
               await tx(writeContracts?.NestVotingToken?.createPoll(name, description, categories));
             } catch (error) {
               console.error(error);
@@ -105,7 +107,7 @@ const CreateForm = ({ name, description, categories, setName, setDescription, se
           }}
           disabled={!name || !description || !categories?.length}
         >
-          Submit
+          Create
         </Button>
       </Form.Item>
     </Form>

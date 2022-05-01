@@ -839,3 +839,99 @@ transferDisplay = (
     </div>
   </div>
 </div>;
+
+
+<div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 p-4 gap-4">
+<div className="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
+  <div className="relative flex flex-row  mb-4 lg:mb-0 break-words  rounded">
+    <div className="rounded-t mb-0 px-0 border-0 bg-gray-50 dark:bg-gray-800 w-full shadow-lg">
+      <div className="block w-full overflow-x-auto">
+        <table className="items text-center w-full bg-transparent border-collapse">
+          <thead>
+            <tr>
+              <th className="px-4  bg-blue-500 dark:bg-gray-600 text-white dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                My Vote Tokens Left
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="text-white-100 ">
+              <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                {voteCoinBalance ?? 0}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div className="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
+        <div className="relative flex flex-row  mb-4 lg:mb-0 break-words  rounded">
+          <div className="rounded-t mb-0 px-0 border-0 bg-indigo-500 dark:bg-gray-800 w-full shadow-lg">
+            <div className="block w-full overflow-x-auto">
+              <table className="items text-center w-full bg-indigo-transparent border-collapse">
+                <thead>
+                  <tr>
+                    <th className="px-4 bg-blue-500 dark:bg-gray-600 text-white dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
+                      Vote Tokens in Bank
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className=" dark:text-gray-100">
+                    <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                      {bankCoinBalance ?? 0}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="w-full overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+              <th className="px-4 py-3">Name</th>
+              <th className="px-4 py-3">wallet Address</th>
+              <th className="px-4 py-3">Position</th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+            <tr className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400">
+              <td className="px-4 py-3">
+                <div className="flex items-center text-sm">
+                  <div>
+                    <p className="font-semibold">Hans Burger</p>
+                  </div>
+                </div>
+              </td>
+              <td className="px-4 py-3 text-sm">8748494040449940400404</td>
+              <td className="px-4 py-3 text-xs">
+                <span className="px-2 py-1 font-semibold leading-tight text-slate-700  rounded-full  dark:text-white">
+                  {" "}
+                  Teacher{" "}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div> */}
+
+          {/* <li className="sm:mr-2">
+            <div
+              className={
+                tab == "Polls"
+                  ? "inline-block p-4 text-indigo-600 rounded-t-lg border-b-2 border-indigo-600 active dark:text-s-500 dark:border-s-500"
+                  : "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+              }
+              onClick={() => setTab(true)}
+            >
+              Uncompiled
+            </div>
+          </li> */}

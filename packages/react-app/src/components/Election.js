@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Empty } from "antd";
-import { useContractReader } from "eth-hooks";
 import { CreateForm } from "./";
 
-const { ethers } = require("ethers");
+// const { ethers } = require("ethers");
 
-const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, totvotes }) => {
+const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, totvotes, results }) => {
   const [tab, setTab] = useState("Polls");
   const [toggleCreate, setToggleCreate] = useState(false);
 
@@ -16,27 +15,14 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
 
   const [categories, setCategories] = useState();
 
-  var results = useContractReader(writeContracts, "NestVotingToken", "displayResults", [pollId]);
-  console.log("🏵 nestVotingResults:", results ? results : "...");
+  // console.log(noPolls, pollcurr);
 
-  console.log(noPolls, pollcurr);
+  useEffect(() => {}, [pollId, pollcurr]);
 
   return (
     <div className="h-full ml-14 mt-14 mb-10 md:ml-64">
       <div className="text-sm mb-2  font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
         <ul className="flex flex-wrap -mb-px cursor-pointer">
-          {/* <li className="sm:mr-2">
-            <div
-              className={
-                tab == "Polls"
-                  ? "inline-block p-4 text-indigo-600 rounded-t-lg border-b-2 border-indigo-600 active dark:text-s-500 dark:border-s-500"
-                  : "inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-              }
-              onClick={() => setTab(true)}
-            >
-              Uncompiled
-            </div>
-          </li> */}
           <li className="sm:mr-2">
             <div
               className={
@@ -98,8 +84,8 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                 </tr>
               </thead>
               <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                {noPolls ? (
-                  noPolls[0].map((poll, index) => (
+                {noPolls && noPolls[0]?.length ? (
+                  noPolls[0]?.map((poll, index) => (
                     <tr
                       key={index}
                       className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
@@ -127,9 +113,7 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                     </tr>
                   ))
                 ) : (
-                  <>
-                    <Empty />
-                  </>
+                  <Empty />
                 )}
               </tbody>
             </table>
@@ -178,12 +162,12 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
               Compile Vote
             </button>
 
-            {/* <div className="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
               <div className="relative flex flex-row  mb-4 lg:mb-0 break-words  rounded">
                 <div className="rounded-t mb-0 px-0 border-0 bg-gray-50 dark:bg-gray-800 w-full shadow-lg">
                   <div className="flex flex-center items-center px-4 py-2">
                     <div className="relative w-full max-w-full flex-grow flex-1">
-                      <h3 className="font-semibold text-center text-gray-900 dark:text-gray-50">{pollcurr[0] || ""}</h3>
+                      <h3 className="font-semibold text-center text-gray-900 dark:text-gray-50">{pollcurr[0] ?? ""}</h3>
                     </div>
                   </div>
                   <div className="block w-full overflow-x-auto">
@@ -198,8 +182,9 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                       <tbody>
                         <tr className="text-gray-700 dark:text-gray-100">
                           <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {pollcurr ? ethers.utils.formatEther(pollcurr[5]) : 0}
-                            {totvotes}
+                            {pollcurr && pollcurr[5] ? pollcurr[5].toNumber() : 0}
+
+                            {/* {totvotes ? totvotes.toNumber() : 0} */}
                           </td>
                         </tr>
                       </tbody>
@@ -207,7 +192,7 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             <div className="my-10 mx-4">
               <div className="w-full overflow-hidden rounded-lg shadow-xs">
@@ -220,8 +205,8 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y mt-10 dark:divide-gray-700 dark:bg-gray-800">
-                      {pollcurr[3].length ? (
-                        pollcurr[3].map((item, index) => (
+                      {pollcurr[3]?.length ? (
+                        pollcurr[3]?.map((item, index) => (
                           <tr
                             key={index}
                             className="bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-400"
@@ -273,11 +258,11 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                   }
                 }}
               >
-                {pollcurr?.showResult ? "Hide Result" : "Show Result"}
+                {pollcurr && pollcurr[4] ? "Hide Result" : "Show Result"}
               </button>
             </div>
 
-            {pollcurr?.showResult ?? (
+            {pollcurr && pollcurr[4] && (
               <div className="grid grid-cols-1 lg:grid-cols-2 p-4 gap-4">
                 <div className="relative flex flex-row  mb-4 lg:mb-0 break-words  rounded">
                   <div className="rounded-t mb-0 ml-10 px-5 border-0 bg-gray-50 dark:bg-gray-800 w-full shadow-lg">
@@ -295,7 +280,7 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                               Candidates
                             </th>
                             <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-                              Votes
+                              Percents
                             </th>
                             <th className="px-4 bg-gray-100 dark:bg-gray-600 text-gray-500 dark:text-gray-100 align-middle border border-solid border-gray-200 dark:border-gray-500 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left min-w-140-px"></th>
                           </tr>
@@ -308,15 +293,15 @@ const Election = ({ noPolls, pollcurr, tx, writeContracts, pollId, setPollId, to
                                   {item}
                                 </th>
                                 <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                  {results[1][index] / 1000}
+                                  {results[1][index] / 100 || 0}%
                                 </td>
-                                <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {/* <td className="border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                   <div className="flex items-center">
                                     <div className="relative w-full">
                                       <span className="mr-2">70%</span>
                                     </div>
                                   </div>
-                                </td>
+                                </td> */}
                               </tr>
                             ))
                           ) : (

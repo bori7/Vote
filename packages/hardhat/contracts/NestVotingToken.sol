@@ -179,13 +179,13 @@ contract NestVotingToken is ERC20 {
             Poll storage curPoll = polls[_pollID];
 
             if(curPoll.showResult == false){
-                curPoll.showResult == true;
+                curPoll.showResult = true;
             }else{
-                curPoll.showResult == false;
+                curPoll.showResult = false;
             }
         }
 
-        function displayResults(uint256 _pollID) public view notStudent notDisabled(_pollID) returns (string[] memory, uint256[] memory){
+        function displayResults(uint256 _pollID) public view  returns (string[] memory, uint256[] memory){
             Poll storage curPoll = polls[_pollID];
             if(curPoll.showResult == true){
                 return (curPoll.candidates, curPoll.percents);

@@ -107,7 +107,7 @@ export default function Account({
   );
 
   return (
-    <div>
+    <div className="bg-transparent">
       {/* {display} */}
 
       {modalButtons}

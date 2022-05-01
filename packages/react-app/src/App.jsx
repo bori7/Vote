@@ -243,7 +243,7 @@ function App(props) {
 
   // If you want to call a function on a new block
   useOnBlock(mainnetProvider, () => {
-    console.log(`⛓ A new mainnet block is here: ${mainnetProvider._lastBlockNumber}`);
+    // console.log(`⛓ A new mainnet block is here: ${mainnetProvider._lastBlockNumber}`);
   });
 
   // Then read your DAI balance like:
@@ -266,28 +266,28 @@ function App(props) {
   // console.log("🏵 vendorTokenBalance:", vendorTokenBalance ? ethers.utils.formatEther(vendorTokenBalance) : "...");
 
   const voteCoinBalance = useContractReader(readContracts, "NestVotingToken", "balanceOf", [address]);
-  console.log("🏵 voteCoinBalance:", voteCoinBalance ? ethers.utils.formatEther(voteCoinBalance) : "...");
+  // console.log("🏵 voteCoinBalance:", voteCoinBalance ? ethers.utils.formatEther(voteCoinBalance) : "...");
 
   const bankCoinBalance = useContractReader(readContracts, "NestVotingToken", "balanceOf", [
     "0xe3983c5E79E5ad5FEBB18030A2959a978c095C6D",
   ]);
-  console.log("🏵 bankCoinBalance:", bankCoinBalance ? ethers.utils.formatEther(bankCoinBalance) : "...");
+  // console.log("🏵 bankCoinBalance:", bankCoinBalance ? ethers.utils.formatEther(bankCoinBalance) : "...");
 
   // var nestTokenBalance = useContractReader(readContracts, "NestToken", "balanceOf", [address]);
   var teachers = useContractReader(writeContracts, "NestVotingToken", "showTeachers");
-  console.log("🏵 nestTokenteachers:", teachers ? teachers : "...");
+  // console.log("🏵 nestTokenteachers:", teachers ? teachers : "...");
 
   var students = useContractReader(writeContracts, "NestVotingToken", "showStudents");
-  console.log("🏵 nestTokenstudents:", students ? students : "...");
+  // console.log("🏵 nestTokenstudents:", students ? students : "...");
 
   var boards = useContractReader(writeContracts, "NestVotingToken", "showBoards");
-  console.log("🏵 nestTokenboards:", boards ? boards : "...");
+  // console.log("🏵 nestTokenboards:", boards ? boards : "...");
 
   // var boards = useContractReader(writeContracts, "NestVotingToken", "showBoards");
   // console.log("🏵 nestTokenboards:", boards ? boards : "...");
 
   var pollsNum = useContractReader(writeContracts, "NestVotingToken", "showPolls");
-  console.log("🏵 nestTokenBalance:", pollsNum, "...");
+  // console.log("🏵 nestTokenBalance:", pollsNum, "...");
 
   useEffect(() => {
     if (
@@ -303,15 +303,15 @@ function App(props) {
     ) {
       console.log("_____________________________________ 🏗 scaffold-eth _____________________________________");
       console.log("🌎 mainnetProvider", mainnetProvider);
-      console.log("🏠 localChainId", localChainId);
-      console.log("👩‍💼 selected address:", address);
-      console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
-      console.log("💵 yourLocalBalance", yourLocalBalance ? ethers.utils.formatEther(yourLocalBalance) : "...");
-      console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
-      console.log("📝 readContracts", readContracts);
-      console.log("🌍 DAI contract on mainnet:", mainnetContracts);
-      console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
-      console.log("🔐 writeContracts", writeContracts);
+      // console.log("🏠 localChainId", localChainId);
+      // console.log("👩‍💼 selected address:", address);
+      // console.log("🕵🏻‍♂️ selectedChainId:", selectedChainId);
+      // console.log("💵 yourLocalBalance", yourLocalBalance ? ethers.utils.formatEther(yourLocalBalance) : "...");
+      // console.log("💵 yourMainnetBalance", yourMainnetBalance ? ethers.utils.formatEther(yourMainnetBalance) : "...");
+      // console.log("📝 readContracts", readContracts);
+      // console.log("🌍 DAI contract on mainnet:", mainnetContracts);
+      // console.log("💵 yourMainnetDAIBalance", myMainnetDAIBalance);
+      // console.log("🔐 writeContracts", writeContracts);
     }
   }, [
     mainnetProvider,
@@ -329,18 +329,18 @@ function App(props) {
     setInjectedProvider(new ethers.providers.Web3Provider(provider));
 
     provider.on("chainChanged", chainId => {
-      console.log(`chain changed to ${chainId}! updating providers`);
+      // console.log(`chain changed to ${chainId}! updating providers`);
       setInjectedProvider(new ethers.providers.Web3Provider(provider));
     });
 
     provider.on("accountsChanged", () => {
-      console.log(`account changed!`);
+      // console.log(`account changed!`);
       setInjectedProvider(new ethers.providers.Web3Provider(provider));
     });
 
     // Subscribe to session disconnection
     provider.on("disconnect", (code, reason) => {
-      console.log(code, reason);
+      // console.log(code, reason);
       logoutOfWeb3Modal();
     });
   }, [setInjectedProvider]);
@@ -368,11 +368,15 @@ function App(props) {
   const [voteFor, setVoteFor] = useState();
 
   const pollcurr = useContractReader(writeContracts, "NestVotingToken", "showPoll", [pollId]);
-  console.log("🏦 tokensPerEth:", pollcurr);
+  // console.log("🏦 tokensPerEth:", pollcurr);
 
   var totvotes = useContractReader(writeContracts, "NestVotingToken", "showVote", [pollId]);
-  console.log("🏵 nestTokenBalance:", totvotes, "...");
+  // console.log("🏵 totvotes:", totvotes ? totvotes.toNumber() : "...");
 
+  var results = useContractReader(readContracts, "NestVotingToken", "displayResults", [pollId]);
+  // console.log("🏵 nestVotingResults:", results ? results : "...");
+
+  useEffect(() => {}, [pollId, pollcurr]);
   return (
     // className="App"
     // style={{ backgroundImage: `url(${bg})` }}
@@ -398,7 +402,7 @@ function App(props) {
                     "Connecting..."
                   )}
                 </div>
-                <div className="flex justify-between items-center h-14 bg-white dark:bg-gray-700 header-right">
+                <div className="flex justify-between items-center h-14 bg-transparent header-right">
                   <div>
                     <a href="#" className="flex items-center text-blue-700 dark:text-white   mr-4 hover:text-blue-100">
                       <span className="inline-flex mr-1">
@@ -448,6 +452,7 @@ function App(props) {
                   </div>
                 </div>
               </div>
+
               <Sidebars />
               <Routes>
                 <Route
@@ -488,6 +493,7 @@ function App(props) {
                       writeContracts={writeContracts}
                       pollId={pollId}
                       setPollId={setPollId}
+                      results={results}
                     />
                   }
                 />
